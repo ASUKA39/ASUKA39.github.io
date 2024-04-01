@@ -6,7 +6,21 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Mon, 01 Apr 2024 21:51:17 +0800</lastBuildDate>
     <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First</title>
+      <link>https://example.org/post/first/</link>
+      <pubDate>Mon, 01 Apr 2024 21:51:17 +0800</pubDate>
+      <guid>https://example.org/post/first/</guid>
+      <description>Hello Hugo Just for testing</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://example.org/about/</link>
+      <pubDate>Mon, 01 Apr 2024 21:51:00 +0800</pubDate>
+      <guid>https://example.org/about/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
