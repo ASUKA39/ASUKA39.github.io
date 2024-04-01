@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My New Hugo Site</title>
-    <link>https://example.org/</link>
+    <link>https://asuka39.github.io/</link>
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 01 Apr 2024 21:51:17 +0800</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://asuka39.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First</title>
-      <link>https://example.org/post/first/</link>
+      <link>https://asuka39.github.io/post/first/</link>
       <pubDate>Mon, 01 Apr 2024 21:51:17 +0800</pubDate>
-      <guid>https://example.org/post/first/</guid>
+      <guid>https://asuka39.github.io/post/first/</guid>
       <description>Hello Hugo Just for testing</description>
     </item>
     <item>
       <title>About</title>
-      <link>https://example.org/about/</link>
+      <link>https://asuka39.github.io/about/</link>
       <pubDate>Mon, 01 Apr 2024 21:51:00 +0800</pubDate>
-      <guid>https://example.org/about/</guid>
+      <guid>https://asuka39.github.io/about/</guid>
       <description></description>
     </item>
   </channel>
