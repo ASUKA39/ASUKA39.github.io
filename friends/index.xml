@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Friends on a39&#39;s blog</title>
+    <link>http://localhost:1313/friends/</link>
+    <description>Recent content in Friends on a39&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language><atom:link href="http://localhost:1313/friends/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Friends</title>
+      <link>http://localhost:1313/friends/friends/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/friends/friends/</guid>
+      
+      <description>Emil’s blog这是一个分享IT技术的小站。越行勤&#39;s Blog努力学习的小菜鸟</description>
+      
+    </item>
+    
+  </channel>
+</rss>
