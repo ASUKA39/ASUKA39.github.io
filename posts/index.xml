@@ -33,6 +33,19 @@ cd /path/to/llvm-tutor mkdir build &amp;amp;&amp;amp; cd build cmake -DLT_LLVM_I
     </item>
     
     <item>
+      <title>ld-linux.so 动态链接器加载流程浅析</title>
+      <link>https://asuka39.github.io/posts/2024-01-17-ldso/</link>
+      <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2024-01-17-ldso/</guid>
+      
+      <description>ld-linux.so 动态链接器加载流程浅析 ld.so 加载 本节讲解 ld.so 刚运行时的加载解析行为
+参考 dl_main源码分析（一） dl_main源码分析（二） _dl_start源码分析 Linux动态库加载函数dlopen源码梳理(一) Linux动态库加载函数dlopen源码梳理(二) 动态链接4 程序员的自我修养第八章笔记 《程序员的自我修养——链接、装载与库》 调用栈 调用栈大致如下，下面只介绍其中一部分较为重要的
+RTLD_START()	(sysdeps/x86_64/dl-machine.h) _dl_start()	(elf/rtld.c) elf_machine_load_addr() elf_get_dynamic_info()	ELF_DYNAMIC_RELOCATE()	(elf/dynamic-link.h) elf_machine_runtime_setup()	(sysdeps/x86_64/dl-machine.h) _ELF_DYNAMIC_DO_RELOC() (sysdeps/x86_64/dl-machine.h) elf_dynamic_do_rel()	(elf/do-rel.h) _dl_start_final()	(elf/rtld.c) _dl_sysdep_start()	(sysdeps/generic/dl-sysdeps.h) _dl_main()	(elf/rtld.c) process_envvars()	(elf/rtld.c) elf_get_dynamic_info()	_dl_setup_hash()	(elf.dl-lookup.c) _dl_new_object()	(elf/dl-object.c) _dl_map_object()	(elf/dl-load.c) _dl_map_object_from_fd()	(elf/dl-load.c)	add_name_to_object()	(elf/dl-load.c)	_dl_new_object()	(elf/dl-object.c) map_segment()	ELF_{PREFERED,FIXED}_ADDRESS()	mprotect()	munmap() _dl_setup_hash()	(elf/dl-lookup.c) _dl_map_object_deps()	(elf/dl-deps.c) preload()	_dl_lookup_symbol()	(elf/dl-lookup.c) do_lookup() _dl_relocate_object()	(loop in elf/dl-reloc.c) _start()	(main binary) 相关函数 _start（RTLD_START） ld.</description>
+      
+    </item>
+    
+    <item>
       <title>Linux 系统编程笔记</title>
       <link>https://asuka39.github.io/posts/2023-12-03-apue/</link>
       <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
@@ -103,6 +116,53 @@ x86 函数参数在函数返回地址的上方 x64 System V AMD64 ABI（Linux、
 格式化字符串漏洞原理 基本原理 依旧以printf函数为例
 进入printf函数之前程序的栈如下
 00:0000│ esp 0xffffce1c —▸ 0x80491b9 (main+67) ◂— add esp, 0x20 01:0004│ 0xffffce20 —▸ 0x804a00c ◂— &amp;#39;Color %s, Number %d, Float %4.2f&amp;#39; 02:0008│ 0xffffce24 —▸ 0x804a008 ◂— 0x646572 /* &amp;#39;red&amp;#39; */ 03:000c│ 0xffffce28 ◂— 0x1e240 04:0010│ 0xffffce2c ◂— 0x51eb851f 05:0014│ 0xffffce30 ◂— 0x40091eb8 06:0018│ 0xffffce34 —▸ 0xf7fbe66c —▸ 0xf7ffdba0 —▸ 0xf7fbe780 —▸ 0xf7ffda40 ◂— .</description>
+      
+    </item>
+    
+    <item>
+      <title>Pikachu靶场通关记录</title>
+      <link>https://asuka39.github.io/posts/2022-08-28-pikachu/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://asuka39.github.io/posts/2022-08-28-pikachu/</guid>
+      
+      <description>如果发现几张图片排版不美观，其实是画廊未成功渲染，只需刷新一次就好 暴力破解 概述 “暴力破解”是一攻击具手段，在web攻击中，一般会使用这种手段对应用系统的认证信息进行获取。 其过程就是使用大量的认证信息在认证接口进行尝试登录，直到得到正确的结果。 为了提高效率，暴力破解一般会使用带有字典的工具来进行自动化操作。 理论上来说，大多数系统都是可以被暴力破解的，只要攻击者有足够强大的计算能力和时间，所以断定一个系统是否存在暴力破解漏洞，其条件也不是绝对的。 我们说一个web应用系统存在暴力破解漏洞，一般是指该web应用系统没有采用或者采用了比较弱的认证安全策略，导致其被暴力破解的“可能性”变的比较高。 这里的认证安全策略, 包括：
+是否要求用户设置复杂的密码 是否每次认证都使用安全的验证码（想想你买火车票时输的验证码～）或者手机otp 是否对尝试登录的行为进行判断和限制（如：连续5次错误登录，进行账号锁定或IP地址锁定等） 是否采用了双因素认证 … … 千万不要小看暴力破解漏洞,往往这种简单粗暴的攻击方式带来的效果是超出预期的！
+基本设置 首先需要配置火狐代理，使数据包通过BurpSuite的监控
+代理地址127.0.0.1即为本地地址
+点击靶场任意链接发送请求，打开BurpSuite代理（proxy）选项卡查看数据包是否被拦截
+被拦截的数据包
+可见，数据包被拦截成功，基本的配置就此完成了。
+基于表单的暴力破解 打开页面，我们可以看到一个非常典型的登录页面，包含两个input元素和一个submit元素
+先随便输入些什么，根据返回的信息找点线索
+密码是那个数字，就是那个（掩鼻）
+提交一下，复制一下返回信息
+毫无疑问是错的 但是你先别急
+回来看看拦截的数据（涉及隐私的一般为POST请求）
+URL编码先辈会梦见赛博林檎吗（雾）
+右键Send to Intruder或者Ctrl+I，观察发现只有username和password两个变量与验证相关，判断可以暴力破解。
+clear默认变量，将username和password设置为要攻击的变量，攻击方式选择多字典交叉的Cluster bomb（覆盖率较高）
+设置Payload，上祖传字典
+所谓祖传其实是GitHub上找的（）
+配置Option-Grep筛选返回信息以鉴别爆破成功的条目
+还记得一开始的返回信息吗，这时候派上用场了
+开始爆破！由于字典太大我就不浪费时间流量了，暂停一下查看阶段性成果
+点击设置的筛选返回信息排序，可以看到admin/123456没有报错且返回值长度与众不同，尝试登录一下
+爆破成功
+admin/123456下面还有几个返回长度不对的账号密码，尝试登录后也不返回任何信息，应该是平台本身的bug 因为是第一次打靶所以记录得详细一些，之后会逐渐省略步骤偷懒 验证码绕过（on client） 首先依旧是非常经典的登录页面，但是多了个长相奇怪的验证码
+可以思考下为什么这样的验证码生活中不常见
+故意输错验证码尝试登录
+可以看到验证码错误的情况下页面不发送POST请求，所以很可能验证码相关代码是写在前端的
+查看页面源码
+发现验证码表单和相关JavaScript源码
+输入正确验证码，将POST请求数据包发送到Repeater选项卡复现，并尝试提交一个错误的验证码
+可以看到只返回username or password is not exists而非验证码错误，说明验证码不会提交给后端验证
+现在可以确信验证码机制是交由前端实现的了，攻击方式也就明朗了
+操作验证码正确的POST请求数据包&amp;ndash;&amp;gt;Cluster bomb&amp;ndash;&amp;gt;设置username、password为变量&amp;ndash;&amp;gt;设置字典和筛选返回信息&amp;ndash;&amp;gt;Start attack
+爆破成功
+事后(?)翻翻后端代码，果然，源码仅对username和password做POST请求，进一步证实验证码机制完全交由前端实现（JavaScript实现）
+现在也可以回答之前的问题了，这种完全由前端（JS、cookie等）实现的验证码机制根本无法保证安全，所以现今的验证码机制都交由更安全的后端来实现
+验证码绕过（on server） 这次的登录页面就是生活中非常常见的形式了，验证码也是图片型的，点击或刷新都会改变验证码</description>
       
     </item>
     
